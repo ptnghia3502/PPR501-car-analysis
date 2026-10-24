@@ -1,0 +1,90 @@
+{
+  "test_loss": 0.11189743131399155,
+  "test_accuracy": 0.9704797047970479,
+  "balanced_accuracy": 0.9615352006511139,
+  "predicted_label_distribution": {
+    "Audi": 199,
+    "Hyundai Creta": 63,
+    "Mahindra Scorpio": 74,
+    "Rolls Royce": 71,
+    "Maruti Suzuki Swift": 100,
+    "Tata Safari": 111,
+    "Toyota Innova": 195
+  },
+  "confusion_matrix": [
+    [
+      196,
+      2,
+      0,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      60,
+      1,
+      0,
+      1,
+      3,
+      2
+    ],
+    [
+      0,
+      0,
+      73,
+      0,
+      0,
+      0,
+      2
+    ],
+    [
+      3,
+      0,
+      0,
+      70,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1,
+      97,
+      2,
+      2
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      105,
+      1
+    ],
+    [
+      0,
+      1,
+      0,
+      0,
+      0,
+      1,
+      188
+    ]
+  ],
+  "best_epoch": 20,
+  "best_val_accuracy": 0.9776119589805603,
+  "final_train_loss": 0.02012111246585846,
+  "final_val_loss": 0.13612957298755646,
+  "final_train_accuracy": 0.991797149181366,
+  "final_val_accuracy": 0.9776119589805603,
+  "num_parameters": 2422855,
+  "epochs_run": 20,
+  "architecture": "mobilenetv2",
+  "image_size": 224,
+  "prior_alpha": 0.0
+}

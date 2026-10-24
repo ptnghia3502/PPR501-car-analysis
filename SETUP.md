@@ -4,13 +4,16 @@ This repository contains three independently run applications:
 
 | Source | Application | Start command |
 | --- | --- | --- |
-| `sources/CNN` | CNN image classifier notebook with a Gradio UI | `jupyter lab .\sources\CNN\main.ipynb` |
+| `sources/CNN` | CNN image classifier (MobileNetV2) with a Gradio UI | `python .\sources\CNN\train_cnn.py --mode serve` |
 | `sources/LinearReg` | Linear Regression plot and Streamlit UI | See [Linear Regression](#4-run-the-linear-regression-app) |
 | `sources/Transformer` | Transformer-based car recommendation chatbot | See [Transformer chatbot](#5-run-the-transformer-recommendation-chatbot) |
 
 All Python libraries for the three apps are listed in the single root
 [`requirements.txt`](./requirements.txt). Create one virtual environment at the
 repository root and install dependencies from that file.
+
+Full documentation for the CNN app lives in
+[`sources/CNN/README.md`](./sources/CNN/README.md).
 
 ## 1. Prerequisites and installation
 
@@ -57,7 +60,44 @@ folder names and structure intact.
 
 ## 3. Run the CNN image-classification app
 
+Full documentation (architecture, metrics, troubleshooting) is in
+[`sources/CNN/README.md`](./sources/CNN/README.md).
+
+`train_cnn.py` is the single source of truth; `main.ipynb` is a thin wrapper
+around it, so both entry points behave identically.
+
 From the repository root, with the shared `.venv` activated:
+
+```bash
+cd sources/CNN
+
+# Quick sanity check (a few batches, about 15 seconds)
+python train_cnn.py --mode train --smoke --epochs 2 --freeze-epochs 1
+
+# Full training + evaluation (MobileNetV2, 20 epochs)
+python train_cnn.py --mode train --epochs 20 --freeze-epochs 5
+
+# Evaluate the saved model again
+python train_cnn.py --mode evaluate
+
+# Predict a single image
+python train_cnn.py --mode predict --image ../Dataset/Test/Audi/1000.jpg
+
+# Launch the Gradio image-upload interface
+python train_cnn.py --mode serve
+```
+
+The Gradio interface opens at `http://localhost:7860`. Stop it with `Ctrl+C`.
+Add `--share` to create a temporary public URL (do not upload private images
+while that setting is on).
+
+Training artifacts are written to `sources/CNN/outputs/car_cnn/`
+(`model.keras`, `labels.json`, `meta.json`, `history.json`, `metrics.json`,
+`confusion_matrix.png`, `training_curves.png`).
+
+### Notebook
+
+`main.ipynb` wraps the same script, so the results are identical:
 
 ```powershell
 jupyter lab .\sources\CNN\main.ipynb
@@ -65,12 +105,11 @@ jupyter lab .\sources\CNN\main.ipynb
 
 In JupyterLab, select the **Python (PPR501 Car Analysis)** kernel, then run the
 notebook cells in order (or choose **Run All**). Training runs for 20 epochs
-and may take a while. The final cell starts the Gradio image-upload interface;
-open the local URL shown in its output.
+and may take a while. The final cell contains the Gradio interface; uncomment
+`demo.launch(...)` to start it.
 
-The notebook currently starts Gradio with `share=True`, which can create a
-temporary public URL. Do not upload private images while using that setting.
-Stop the running notebook cell to shut down the interface.
+> On macOS, if Matplotlib cannot write its cache, run
+> `export MPLCONFIGDIR=/tmp/mplcache` before training.
 
 ## 4. Run the Linear Regression app
 

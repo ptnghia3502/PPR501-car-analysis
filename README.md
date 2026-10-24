@@ -33,7 +33,18 @@ Mục tiêu của dự án là cung cấp cái nhìn tổng quan về thị trư
 
 ## 2. Convolutional Neural Network (CNN)
 
-- Source: `sources\CNN`
+- Source: `sources/CNN`
+- Tài liệu đầy đủ (kiến trúc, cách chạy, đánh giá, troubleshooting): [`sources/CNN/README.md`](./sources/CNN/README.md)
+
+Phân loại ảnh xe thuộc 7 nhóm bằng **MobileNetV2 pre-trained trên ImageNet**
+(2 stage: đóng băng backbone → fine-tune), kèm **prior correction** để xác suất
+dự đoán cân bằng giữa các hãng.
+
+```bash
+cd sources/CNN
+python train_cnn.py --mode train --epochs 20 --freeze-epochs 5
+python train_cnn.py --mode serve        # http://localhost:7860
+```
 
 - Lenet 5:
 
@@ -46,6 +57,21 @@ Mục tiêu của dự án là cung cấp cái nhìn tổng quan về thị trư
 - Source: `sources\LinearReg`
 
 ![Linear Regression](./docs/imgs/vietnam-car-price-regression.png)
+
+## 4. Transformer (Chatbot gợi ý xe)
+
+- Source: `sources/Transformer`
+
+Ứng dụng chatbot Streamlit sử dụng **Sentence-Transformers embedding** để lọc và
+xếp hạng xe theo mô tả tiếng Việt của người dùng, kèm nhận diện ảnh xe bằng CNN
+và gợi ý giá bán bằng **Linear Regression**.
+
+```bash
+cd sources/Transformer
+streamlit run app.py --server.port 8502   # http://localhost:8502
+```
+
+- Notebook: [`sources/Transformer/main.ipynb`](./sources/Transformer/main.ipynb)
 
 ---
 

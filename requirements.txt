@@ -8,5 +8,8 @@ gradio
 pillow
 streamlit
 sentence-transformers
+torch
+torchvision
+transformers
 jupyterlab
 ipykernel

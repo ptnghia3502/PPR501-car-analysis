@@ -391,7 +391,7 @@ mkdir -p logs
 python train_cnn.py --mode train 2>&1 | tee logs/train_cnn_full.log
 ```
 
-> **Thời gian chạy (CPU, MacBook):** khoảng **11 phút** cho 20 epoch
+> **Thời gian chạy (CPU):** khoảng **10–15 phút** cho 20 epoch
 > (~13 giây/epoch, 84 batch/epoch). Trên GPU: vài giây/epoch.
 
 ### 6.3 Đánh giá lại model đã lưu

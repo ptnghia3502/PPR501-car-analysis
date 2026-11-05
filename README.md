@@ -35,6 +35,8 @@ Mục tiêu của dự án là cung cấp cái nhìn tổng quan về thị trư
 
 - Source: `sources\CNN`
 
+- Notebook tự động tải dataset ảnh xe từ Kaggle (`kshitij192/cars-image-dataset`, ~38 MB) nếu chưa có sẵn trong `sources/Dataset` — chỉ cần 1 file `sources/CNN/main_en.ipynb` là chạy được.
+
 - Lenet 5:
 
 ![Lenet 5](./docs/imgs/lenet5-original.png)

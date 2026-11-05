@@ -55,6 +55,11 @@ sources/
 `Test` contain the seven car-image class folders used by `CNN`. Keep the
 folder names and structure intact.
 
+> The CNN notebook (`sources/CNN/main_en.ipynb`) downloads the car-image dataset
+> from Kaggle by itself when it is not found locally
+> (`kshitij192/cars-image-dataset`, ≈ 38 MB, no API token required), so the
+> notebook can also be run on its own without this repository.
+
 ## 3. Run the CNN image-classification app
 
 From the repository root, with the shared `.venv` activated:

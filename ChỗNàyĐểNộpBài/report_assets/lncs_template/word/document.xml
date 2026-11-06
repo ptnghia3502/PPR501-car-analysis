@@ -1,0 +1,1247 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex" xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex" xmlns:cx2="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex" xmlns:cx3="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex" xmlns:cx4="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex" xmlns:cx5="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" xmlns:cx6="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex" xmlns:cx7="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex" xmlns:cx8="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:aink="http://schemas.microsoft.com/office/drawing/2016/ink" xmlns:am3d="http://schemas.microsoft.com/office/drawing/2017/model3d" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:w16cid="http://schemas.microsoft.com/office/word/2016/wordml/cid" xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid wp14">
+  <w:body>
+    <w:p w:rsidR="009F7FCE" w:rsidRPr="00EE426C" w:rsidRDefault="009B2539" w:rsidP="00C24DEF">
+      <w:pPr>
+        <w:pStyle w:val="papertitle"/>
+      </w:pPr>
+      <w:r>
+        <w:t>Contribution Title</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRPr="00EE426C" w:rsidRDefault="009B2539" w:rsidP="00EE426C">
+      <w:pPr>
+        <w:pStyle w:val="author"/>
+      </w:pPr>
+      <w:r>
+        <w:t>First Author</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE426C">
+        <w:rPr>
+          <w:vertAlign w:val="superscript"/>
+        </w:rPr>
+        <w:t>1</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="ORCID"/>
+        </w:rPr>
+        <w:t>[0000-1111-2222-3333]</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE426C">
+        <w:t xml:space="preserve"> and </w:t>
+      </w:r>
+      <w:r>
+        <w:t>Second Author</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE426C">
+        <w:rPr>
+          <w:vertAlign w:val="superscript"/>
+        </w:rPr>
+        <w:t>2</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="ORCID"/>
+        </w:rPr>
+        <w:t>[1111-2222-3333-4444]</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRPr="00EE426C" w:rsidRDefault="009B2539" w:rsidP="00EE426C">
+      <w:pPr>
+        <w:pStyle w:val="address"/>
+      </w:pPr>
+      <w:r w:rsidRPr="00EE426C">
+        <w:rPr>
+          <w:vertAlign w:val="superscript"/>
+        </w:rPr>
+        <w:t>1</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE426C">
+        <w:t xml:space="preserve"> Princeton University, Princeton NJ 08544, USA</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRPr="006809AE" w:rsidRDefault="009B2539" w:rsidP="006809AE">
+      <w:pPr>
+        <w:pStyle w:val="address"/>
+      </w:pPr>
+      <w:r w:rsidRPr="006809AE">
+        <w:rPr>
+          <w:vertAlign w:val="superscript"/>
+        </w:rPr>
+        <w:t>2</w:t>
+      </w:r>
+      <w:r w:rsidRPr="006809AE">
+        <w:t xml:space="preserve"> Springer Heidelberg, Tiergartenstr. 17, 69121 Heidelberg, Germany</w:t>
+      </w:r>
+      <w:r w:rsidRPr="006809AE">
+        <w:br/>
+      </w:r>
+      <w:r w:rsidRPr="006809AE">
+        <w:rPr>
+          <w:rStyle w:val="e-mail"/>
+        </w:rPr>
+        <w:t>lncs@springer.com</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRPr="00EE426C" w:rsidRDefault="009B2539" w:rsidP="00EE426C">
+      <w:pPr>
+        <w:pStyle w:val="abstract"/>
+        <w:spacing w:after="0"/>
+        <w:ind w:firstLine="0"/>
+      </w:pPr>
+      <w:r w:rsidRPr="00EE426C">
+        <w:rPr>
+          <w:b/>
+          <w:bCs/>
+        </w:rPr>
+        <w:t xml:space="preserve">Abstract. </w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE426C">
+        <w:t>The abstract should summarize the contents of the paper in short terms, i.e. 15–250 words.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRPr="00EE426C" w:rsidRDefault="009B2539" w:rsidP="00EE426C">
+      <w:pPr>
+        <w:pStyle w:val="keywords"/>
+      </w:pPr>
+      <w:r w:rsidRPr="00EE426C">
+        <w:rPr>
+          <w:b/>
+          <w:bCs/>
+        </w:rPr>
+        <w:t>Keywords:</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE426C">
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r>
+        <w:t>First Keyword</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE426C">
+        <w:t xml:space="preserve">, </w:t>
+      </w:r>
+      <w:r>
+        <w:t>Second Keyword, Third Keyword.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRDefault="009B2539" w:rsidP="00C24DEF">
+      <w:pPr>
+        <w:pStyle w:val="heading1"/>
+      </w:pPr>
+      <w:r>
+        <w:t>First Section</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="006809AE" w:rsidRPr="006809AE" w:rsidRDefault="009B2539" w:rsidP="006809AE">
+      <w:pPr>
+        <w:pStyle w:val="heading2"/>
+        <w:spacing w:before="0"/>
+      </w:pPr>
+      <w:r>
+        <w:t>A Subsection</w:t>
+      </w:r>
+      <w:r w:rsidRPr="003E3370">
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r>
+        <w:t>Sample</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRPr="00EE426C" w:rsidRDefault="009B2539" w:rsidP="00C24DEF">
+      <w:pPr>
+        <w:pStyle w:val="p1a"/>
+      </w:pPr>
+      <w:r w:rsidRPr="00EE426C">
+        <w:t>Please note that the first paragraph of a section or subsection is not indented. The first paragraphs that follows a table, figure, equation etc. does not have an indent, either.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00C24DEF" w:rsidRDefault="009B2539" w:rsidP="00C24DEF">
+      <w:r>
+        <w:t>Subsequent paragraphs, however, are indented.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="003E3370" w:rsidRDefault="009B2539" w:rsidP="009930E4">
+      <w:pPr>
+        <w:pStyle w:val="heading 3"/>
+      </w:pPr>
+      <w:r w:rsidRPr="009930E4">
+        <w:rPr>
+          <w:rStyle w:val="heading3"/>
+        </w:rPr>
+        <w:t>Sample Heading (Third Level).</w:t>
+      </w:r>
+      <w:r w:rsidRPr="003E3370">
+        <w:rPr>
+          <w:rStyle w:val="heading3"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="heading3"/>
+          <w:b w:val="0"/>
+        </w:rPr>
+        <w:t>Only two levels of headings should be numbered. Lower level headings remain unnumbered; they are formatted as run-in headings.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="003E3370" w:rsidRDefault="009B2539" w:rsidP="009930E4">
+      <w:pPr>
+        <w:pStyle w:val="heading 4"/>
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+      </w:pPr>
+      <w:r w:rsidRPr="009930E4">
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+        </w:rPr>
+        <w:t>Sample Heading (Forth Level).</w:t>
+      </w:r>
+      <w:r w:rsidRPr="003E3370">
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+        <w:t xml:space="preserve">The contribution should contain no more than four levels of headings. The following </w:t>
+      </w:r>
+      <w:r w:rsidRPr="00A97482">
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r w:rsidRPr="00A97482">
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+        <w:instrText xml:space="preserve"> REF _Ref467509391 \h  \* MERGEFORMAT </w:instrText>
+      </w:r>
+      <w:r w:rsidRPr="00A97482">
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+      </w:r>
+      <w:r w:rsidRPr="00A97482">
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r w:rsidRPr="00EE1BBB">
+        <w:t xml:space="preserve">Table </w:t>
+      </w:r>
+      <w:r w:rsidRPr="00EE1BBB">
+        <w:rPr>
+          <w:noProof/>
+        </w:rPr>
+        <w:t>1</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00A97482">
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="end"/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rStyle w:val="heading4"/>
+          <w:i w:val="0"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> gives a summary of all heading levels.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="002D3488" w:rsidRDefault="009B2539" w:rsidP="00DB42F5">
+      <w:pPr>
+        <w:pStyle w:val="tablecaption"/>
+      </w:pPr>
+      <w:bookmarkStart w:id="1" w:name="_Ref467509391"/>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:t xml:space="preserve">Table </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:instrText xml:space="preserve"> SEQ "Table" \* MERGEFORMAT </w:instrText>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r w:rsidR="00B23481">
+        <w:rPr>
+          <w:b/>
+          <w:noProof/>
+        </w:rPr>
+        <w:t>1</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="end"/>
+      </w:r>
+      <w:bookmarkEnd w:id="1"/>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:t>.</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r w:rsidRPr="00DB42F5">
+        <w:t>Table</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> captions should be placed above the tables.</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:w="6889" w:type="dxa"/>
+        <w:jc w:val="center"/>
+        <w:tblLayout w:type="fixed"/>
+        <w:tblCellMar>
+          <w:left w:w="70" w:type="dxa"/>
+          <w:right w:w="70" w:type="dxa"/>
+        </w:tblCellMar>
+        <w:tblLook w:val="0000" w:firstRow="0" w:lastRow="0" w:firstColumn="0" w:lastColumn="0" w:noHBand="0" w:noVBand="0"/>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1692"/>
+        <w:gridCol w:w="3444"/>
+        <w:gridCol w:w="1753"/>
+      </w:tblGrid>
+      <w:tr w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidTr="0051304D">
+        <w:trPr>
+          <w:jc w:val="center"/>
+        </w:trPr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1664" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="12" w:space="0" w:color="000000"/>
+              <w:bottom w:val="single" w:sz="6" w:space="0" w:color="000000"/>
+            </w:tcBorders>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Heading level</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="3387" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="12" w:space="0" w:color="000000"/>
+              <w:bottom w:val="single" w:sz="6" w:space="0" w:color="000000"/>
+            </w:tcBorders>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Example</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1724" w:type="dxa"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:sz="12" w:space="0" w:color="000000"/>
+              <w:bottom w:val="single" w:sz="6" w:space="0" w:color="000000"/>
+            </w:tcBorders>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Font size and style</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidTr="0051304D">
+        <w:trPr>
+          <w:trHeight w:val="284"/>
+          <w:jc w:val="center"/>
+        </w:trPr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1664" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Title (centered)</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="3387" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="00192151">
+              <w:rPr>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="28"/>
+                <w:szCs w:val="25"/>
+              </w:rPr>
+              <w:t>Lecture Notes</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1724" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>14 point, bold</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidTr="0051304D">
+        <w:trPr>
+          <w:trHeight w:val="284"/>
+          <w:jc w:val="center"/>
+        </w:trPr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1664" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>1</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+                <w:vertAlign w:val="superscript"/>
+              </w:rPr>
+              <w:t>st</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>-level heading</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="3387" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="00192151">
+              <w:rPr>
+                <w:b/>
+                <w:bCs/>
+                <w:sz w:val="24"/>
+                <w:szCs w:val="21"/>
+              </w:rPr>
+              <w:t>1 Introduction</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1724" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>12 point, bold</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidTr="0051304D">
+        <w:trPr>
+          <w:trHeight w:val="284"/>
+          <w:jc w:val="center"/>
+        </w:trPr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1664" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>2</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+                <w:vertAlign w:val="superscript"/>
+              </w:rPr>
+              <w:t>nd</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>-level heading</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="3387" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="00192151">
+              <w:rPr>
+                <w:b/>
+                <w:bCs/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>2.1 Printing Area</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1724" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>10 point, bold</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidTr="0051304D">
+        <w:trPr>
+          <w:trHeight w:val="284"/>
+          <w:jc w:val="center"/>
+        </w:trPr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1664" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>3</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+                <w:vertAlign w:val="superscript"/>
+              </w:rPr>
+              <w:t>rd</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>-level heading</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="3387" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="00192151">
+              <w:rPr>
+                <w:b/>
+                <w:bCs/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Run-in Heading in Bold.</w:t>
+            </w:r>
+            <w:r w:rsidRPr="00192151">
+              <w:rPr>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t xml:space="preserve"> Text follows</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1724" w:type="dxa"/>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>10 point, bold</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidTr="0051304D">
+        <w:trPr>
+          <w:trHeight w:val="284"/>
+          <w:jc w:val="center"/>
+        </w:trPr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1664" w:type="dxa"/>
+            <w:tcBorders>
+              <w:bottom w:val="single" w:sz="12" w:space="0" w:color="000000"/>
+            </w:tcBorders>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>4</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+                <w:vertAlign w:val="superscript"/>
+              </w:rPr>
+              <w:t>th</w:t>
+            </w:r>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>-level heading</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="3387" w:type="dxa"/>
+            <w:tcBorders>
+              <w:bottom w:val="single" w:sz="12" w:space="0" w:color="000000"/>
+            </w:tcBorders>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="00192151">
+              <w:rPr>
+                <w:i/>
+                <w:iCs/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>Lowest Level Heading.</w:t>
+            </w:r>
+            <w:r w:rsidRPr="00192151">
+              <w:rPr>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t xml:space="preserve"> Text follows</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:w="1724" w:type="dxa"/>
+            <w:tcBorders>
+              <w:bottom w:val="single" w:sz="12" w:space="0" w:color="000000"/>
+            </w:tcBorders>
+            <w:vAlign w:val="center"/>
+          </w:tcPr>
+          <w:p w:rsidR="00A97482" w:rsidRPr="009A3755" w:rsidRDefault="009B2539" w:rsidP="0051304D">
+            <w:pPr>
+              <w:ind w:firstLine="0"/>
+              <w:jc w:val="left"/>
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+            </w:pPr>
+            <w:r w:rsidRPr="009A3755">
+              <w:rPr>
+                <w:sz w:val="18"/>
+                <w:szCs w:val="18"/>
+              </w:rPr>
+              <w:t>10 point, italic</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p w:rsidR="00EE1BBB" w:rsidRDefault="009B2539" w:rsidP="00EC51EE">
+      <w:pPr>
+        <w:spacing w:before="240"/>
+        <w:ind w:firstLine="0"/>
+      </w:pPr>
+      <w:r>
+        <w:t xml:space="preserve">Displayed equations are centered and set on a separate line. </w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00EE1BBB" w:rsidRDefault="009B2539" w:rsidP="00EE1BBB">
+      <w:pPr>
+        <w:pStyle w:val="equation"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:i/>
+        </w:rPr>
+        <w:tab/>
+      </w:r>
+      <w:bookmarkStart w:id="2" w:name="_Ref467511664"/>
+      <w:bookmarkStart w:id="3" w:name="_Ref467511750"/>
+      <w:r>
+        <w:rPr>
+          <w:i/>
+        </w:rPr>
+        <w:t>x</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> + </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:i/>
+        </w:rPr>
+        <w:t>y</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> = </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:i/>
+        </w:rPr>
+        <w:t>z</w:t>
+      </w:r>
+      <w:r>
+        <w:tab/>
+        <w:t>(</w:t>
+      </w:r>
+      <w:r w:rsidR="00543604">
+        <w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r w:rsidR="00543604">
+        <w:instrText xml:space="preserve"> SEQ "Equation" \n \* MERGEFORMAT </w:instrText>
+      </w:r>
+      <w:r w:rsidR="00543604">
+        <w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r w:rsidR="00B23481">
+        <w:rPr>
+          <w:noProof/>
+        </w:rPr>
+        <w:t>1</w:t>
+      </w:r>
+      <w:r w:rsidR="00543604">
+        <w:rPr>
+          <w:noProof/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="end"/>
+      </w:r>
+      <w:bookmarkStart w:id="4" w:name="_Ref467511674"/>
+      <w:bookmarkEnd w:id="2"/>
+      <w:r>
+        <w:t>)</w:t>
+      </w:r>
+      <w:bookmarkEnd w:id="4"/>
+      <w:bookmarkEnd w:id="3"/>
+    </w:p>
+    <w:p w:rsidR="001D7555" w:rsidRPr="00D000D8" w:rsidRDefault="009B2539" w:rsidP="00D000D8">
+      <w:pPr>
+        <w:pStyle w:val="p1a"/>
+        <w:tabs>
+          <w:tab w:val="left" w:pos="1929"/>
+        </w:tabs>
+      </w:pPr>
+      <w:r w:rsidRPr="00D000D8">
+        <w:t xml:space="preserve">Please try to avoid rasterized images for line-art diagrams and schemas. Whenever possible, use vector graphics instead (see </w:t>
+      </w:r>
+      <w:r w:rsidRPr="00D000D8">
+        <w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r w:rsidRPr="00D000D8">
+        <w:instrText xml:space="preserve"> REF _Ref467515387 \h  \* MERGEFORMAT </w:instrText>
+      </w:r>
+      <w:r w:rsidRPr="00D000D8">
+        <w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r w:rsidRPr="00D000D8">
+        <w:t>Fig. 1</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00D000D8">
+        <w:fldChar w:fldCharType="end"/>
+      </w:r>
+      <w:r w:rsidRPr="00D000D8">
+        <w:t>).</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00EE1BBB" w:rsidRPr="00EE1BBB" w:rsidRDefault="009B2539" w:rsidP="00EE1BBB">
+      <w:pPr>
+        <w:spacing w:before="360"/>
+        <w:ind w:left="227" w:hanging="227"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:noProof/>
+          <w:lang w:val="de-DE" w:eastAsia="de-DE"/>
+        </w:rPr>
+        <w:lastRenderedPageBreak/>
+        
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="002D3488" w:rsidRDefault="009B2539" w:rsidP="001D7555">
+      <w:pPr>
+        <w:pStyle w:val="figurecaption"/>
+        <w:jc w:val="both"/>
+      </w:pPr>
+      <w:bookmarkStart w:id="5" w:name="_Ref467515387"/>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:t>Fig.</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="begin"/>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:instrText xml:space="preserve"> SEQ "Figure" \* MERGEFORMAT </w:instrText>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="separate"/>
+      </w:r>
+      <w:r w:rsidR="00B23481">
+        <w:rPr>
+          <w:b/>
+          <w:noProof/>
+        </w:rPr>
+        <w:t>1</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:fldChar w:fldCharType="end"/>
+      </w:r>
+      <w:bookmarkEnd w:id="5"/>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+        </w:rPr>
+        <w:t>.</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> A f</w:t>
+      </w:r>
+      <w:r w:rsidRPr="002D3488">
+        <w:t>igure</w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve"> caption is always placed below the illustration. Short captions are centered, while long ones are justified. The macro button chooses the correct format automatically.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00D000D8" w:rsidRPr="00F55A71" w:rsidRDefault="009B2539" w:rsidP="00E47862">
+      <w:pPr>
+        <w:pStyle w:val="p1a"/>
+      </w:pPr>
+      <w:r w:rsidRPr="00F55A71">
+        <w:t>For citations of references, we prefer the use of square brackets and consecutive nu</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00F55A71">
+        <w:t>m</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00F55A71">
+        <w:t>bers. Citations using labels or the author/year convention are also acceptable. The following bibliography provides a sample reference list with entries for journal art</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00F55A71">
+        <w:t>i</w:t>
+      </w:r>
+      <w:r w:rsidRPr="00F55A71">
+        <w:t>cles [1], an LNCS chapter [2], a book [3], proceedings without editors [4], as well as a URL</w:t>
+      </w:r>
+      <w:r w:rsidR="00B13430">
+        <w:t> </w:t>
+      </w:r>
+      <w:r w:rsidRPr="00F55A71">
+        <w:t>[5].</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="002B2074" w:rsidRDefault="002B2074" w:rsidP="002B2074">
+      <w:pPr>
+        <w:pStyle w:val="acknowlegments"/>
+        <w:rPr>
+          <w:b/>
+          <w:bCs/>
+        </w:rPr>
+      </w:pPr>
+      <w:r w:rsidRPr="002B2074">
+        <w:rPr>
+          <w:rStyle w:val="heading3"/>
+        </w:rPr>
+        <w:t>Acknowledgments.</w:t>
+      </w:r>
+      <w:r w:rsidRPr="002B2074">
+        <w:rPr>
+          <w:b/>
+          <w:bCs/>
+        </w:rPr>
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r w:rsidRPr="002B2074">
+        <w:rPr>
+          <w:bCs/>
+        </w:rPr>
+        <w:t xml:space="preserve">A third level heading in 9-point font size at the end of the paper is used for general acknowledgments, for example: This study was funded by X (grant number Y).</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="002B2074" w:rsidRDefault="002B2074" w:rsidP="002B2074">
+      <w:pPr>
+        <w:pStyle w:val="acknowlegments"/>
+      </w:pPr>
+      <w:r w:rsidRPr="002B2074">
+        <w:rPr>
+          <w:rStyle w:val="heading3"/>
+        </w:rPr>
+        <w:t>Disclosure of Interests.</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:b/>
+          <w:bCs/>
+        </w:rPr>
+        <w:t xml:space="preserve"> </w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve">It is now necessary to declare any competing interests or to specifically state that the authors have no competing interests. </w:t>
+      </w:r>
+      <w:r>
+        <w:t xml:space="preserve">Please place the statement with a third level heading in 9-point font size beneath the (optional) acknowledgments, for example: </w:t>
+        <w:t xml:space="preserve">The authors have no competing interests to declare that are relevant to the content of this article. Or: Author A has received research grants from Company W. </w:t>
+        <w:t xml:space="preserve">Author B has received a speaker honorarium from Company X and owns stock in Company Y. Author C is a member of committee Z.</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00606587" w:rsidRDefault="009B2539" w:rsidP="00606587">
+      <w:pPr>
+        <w:pStyle w:val="heading1"/>
+        <w:numPr>
+          <w:ilvl w:val="0"/>
+          <w:numId w:val="0"/>
+        </w:numPr>
+        <w:ind w:left="567" w:hanging="567"/>
+      </w:pPr>
+      <w:r>
+        <w:t>References</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00606587" w:rsidRDefault="009B2539" w:rsidP="00606587">
+      <w:pPr>
+        <w:pStyle w:val="referenceitem"/>
+      </w:pPr>
+      <w:r>
+        <w:t xml:space="preserve">Author, F.: Article title. Journal </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr><w:b/></w:rPr>
+        <w:t>2</w:t>
+      </w:r>
+      <w:r>
+        <w:t>(5), 99–110 (2016)</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00606587" w:rsidRDefault="009B2539" w:rsidP="00606587">
+      <w:pPr>
+        <w:pStyle w:val="referenceitem"/>
+      </w:pPr>
+      <w:r>
+        <w:t xml:space="preserve">Author, F., Author, S.: Title of a proceedings paper. In: Editor, F., Editor, S. (eds.) CONFERENCE 2016, LNCS, vol. 9999, pp. 1–13. Springer, Heidelberg (2016)</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="002D3488" w:rsidRDefault="009B2539" w:rsidP="00606587">
+      <w:pPr>
+        <w:pStyle w:val="referenceitem"/>
+      </w:pPr>
+      <w:r>
+        <w:t xml:space="preserve">Author, F., Author, S., Author, T.: Book title. 2nd </w:t>
+      </w:r>
+      <w:r>
+        <w:t>edn</w:t>
+      </w:r>
+      <w:r>
+        <w:t>. Publisher, Location (1999)</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="002C5825" w:rsidRDefault="009B2539" w:rsidP="00606587">
+      <w:pPr>
+        <w:pStyle w:val="referenceitem"/>
+      </w:pPr>
+      <w:r>
+        <w:t>Author, F.: Contribution title. In: 9th International Proceedings on Proceedings, pp. 1–2. Publisher, Location (2010)</w:t>
+      </w:r>
+    </w:p>
+    <w:p w:rsidR="00F5783C" w:rsidRPr="00606587" w:rsidRDefault="009B2539" w:rsidP="00606587">
+      <w:pPr>
+        <w:pStyle w:val="referenceitem"/>
+      </w:pPr>
+      <w:r>
+        <w:t xml:space="preserve">LNCS Homepage, </w:t>
+      </w:r>
+      <w:hyperlink r:id="rId10" w:history="1">
+        <w:r w:rsidRPr="00FB3EC4">
+          <w:rPr>
+            <w:rStyle w:val="Hyperlink"/>
+          </w:rPr>
+          <w:t>http://www.springer.com/lncs</w:t>
+        </w:r>
+      </w:hyperlink>
+      <w:r>
+        <w:t>, last accessed 2023/10/25</w:t>
+      </w:r>
+    </w:p>
+    <w:sectPr w:rsidR="00F5783C" w:rsidRPr="00606587" w:rsidSect="009F7FCE">
+      <w:headerReference w:type="even" r:id="rId11"/>
+      <w:headerReference w:type="default" r:id="rId12"/>
+      <w:footerReference w:type="even" r:id="rId13"/>
+      <w:footerReference w:type="default" r:id="rId14"/>
+      <w:headerReference w:type="first" r:id="rId15"/>
+      <w:footerReference w:type="first" r:id="rId16"/>
+      <w:pgSz w:w="11906" w:h="16838" w:code="9"/>
+      <w:pgMar w:top="2948" w:right="2494" w:bottom="2948" w:left="2494" w:header="2381" w:footer="2324" w:gutter="0"/>
+      <w:cols w:space="227"/>
+      <w:titlePg/>
+      <w:docGrid w:linePitch="240"/>
+    </w:sectPr>
+  </w:body>
+</w:document>

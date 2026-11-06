@@ -1,0 +1,20 @@
+{
+  "class_indices": {
+    "Audi": 0,
+    "Hyundai Creta": 1,
+    "Mahindra Scorpio": 2,
+    "Rolls Royce": 3,
+    "Maruti Suzuki Swift": 4,
+    "Tata Safari": 5,
+    "Toyota Innova": 6
+  },
+  "class_names": [
+    "Audi",
+    "Hyundai Creta",
+    "Mahindra Scorpio",
+    "Rolls Royce",
+    "Maruti Suzuki Swift",
+    "Tata Safari",
+    "Toyota Innova"
+  ]
+}

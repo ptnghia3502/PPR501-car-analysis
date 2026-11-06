@@ -1,0 +1,32 @@
+{
+  "architecture": "mobilenetv2",
+  "image_size": 224,
+  "class_names": [
+    "Audi",
+    "Hyundai Creta",
+    "Mahindra Scorpio",
+    "Rolls Royce",
+    "Maruti Suzuki Swift",
+    "Tata Safari",
+    "Toyota Innova"
+  ],
+  "class_folders": [
+    "Audi",
+    "Hyundai Creta",
+    "Mahindra Scorpio",
+    "Rolls Royce",
+    "Swift",
+    "Tata Safari",
+    "Toyota Innova"
+  ],
+  "priors": {
+    "Audi": 0.24284009546539378,
+    "Hyundai Creta": 0.0808472553699284,
+    "Mahindra Scorpio": 0.09427207637231504,
+    "Rolls Royce": 0.09278042959427207,
+    "Maruti Suzuki Swift": 0.12649164677804295,
+    "Tata Safari": 0.13156324582338902,
+    "Toyota Innova": 0.23120525059665872
+  },
+  "prior_alpha": 0.0
+}

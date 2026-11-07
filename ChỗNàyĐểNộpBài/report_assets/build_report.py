@@ -108,7 +108,7 @@ def math_runs(expression: str) -> str:
                 )
                 rest = rest[1:]
             if rest:
-                runs.append(f'<w:r><w:t xml:space="preserve">{esc(rest)}</w:t></w:r>')
+                runs.append('<w:r><w:t xml:space="preserve">' + esc(rest) + "</w:t></w:r>")
     return "".join(runs)
 
 
@@ -192,7 +192,7 @@ class Report:
         self.add(para(content, "acknowlegments"))
 
     # -- floats ------------------------------------------------------------
-    def figure(self, filename: str, caption: str, width_ratio: float = 1.0) -> None:
+    def figure(self, filename: str, caption: str, width_ratio: float = 0.82) -> None:
         """Embed a PNG with a ``figurecaption`` underneath."""
         source = FIG_DIR / filename
         self.figures += 1
@@ -215,7 +215,7 @@ class Report:
             'xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing">'
             f'<wp:extent cx="{cx}" cy="{cy}"/>'
             '<wp:effectExtent l="0" t="0" r="0" b="0"/>'
-            '<wp:docPr id="%d" name="Figure %d" descr="%s"/>'
+            f'<wp:docPr id="%d" name="Figure %d" descr="%s"/>'
             "<wp:cNvGraphicFramePr>"
             '<a:graphicFrameLocks xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" noChangeAspect="1"/>'
             "</wp:cNvGraphicFramePr>"
@@ -334,7 +334,7 @@ class Report:
         )
         extra = ""
         if note:
-            extra = f"<w:r><w:t xml:space=\"preserve\">  {esc(note)}</w:t></w:r>"
+            extra = f'<w:r><w:t xml:space="preserve">  {esc(note)}</w:t></w:r>'
         self.add(para(content, "equation"))
         self.bookmark_id += 1
 
@@ -388,23 +388,23 @@ def build_report() -> Report:
     abstract = (
         "This report describes a working prototype that supports three questions that "
         "buyers of second-hand cars in Vietnam ask repeatedly: which listings match what "
-        "I am looking for, what kind of vehicle does this photograph show, and is the "
-        "asking price reasonable for this year of production and this distance on the "
-        "odometer. The three features are implemented as decoupled pipelines that share "
-        "one listing table. Text search first applies a set of regular expressions that "
-        "turn a Vietnamese request into explicit attributes such as brand, price band, "
-        "production year, seat count, body style and fuel type, and then ranks the "
-        "surviving listings with a fusion of a multilingual MiniLM sentence embedding and "
-        "a TF-IDF representation. Image recognition uses MobileNetV2 pre-trained on "
-        "ImageNet with a compact classification head and a confidence gate that refuses "
-        "to answer when the network is not sure. Price analysis fits a single-variable "
-        "ordinary least squares model to production year and to odometer reading under a "
-        "grouped hold-out split. All three components were evaluated on the public "
-        "automobile dataset of 15,442 Vietnamese listings and on a seven-class vehicle "
-        "image collection of 4,165 photographs; the classifier reaches 97.05% accuracy "
-        "and 96.54% macro-F1 on 813 unseen images, while the two regressions explain "
-        "less than 5% of the price variance and are therefore reported as descriptive "
-        "market references rather than as valuation models."
+        "I am looking for, what vehicle does this photograph show, and is the asking "
+        "price reasonable for this year of production and this distance on the "
+        "odometer. The three features are decoupled pipelines that share one listing "
+        "table. Text search applies regular expressions that turn a Vietnamese request "
+        "into explicit attributes such as brand, price band, production year, seat "
+        "count and body style, and then ranks the surviving listings by fusing a "
+        "multilingual MiniLM sentence embedding with a TF-IDF representation. Image "
+        "recognition uses MobileNetV2 pre-trained on ImageNet with a compact "
+        "classification head and a confidence gate that refuses to answer when the "
+        "network is not sure. Price analysis fits single-variable ordinary least "
+        "squares models to production year and odometer reading under a grouped "
+        "hold-out split. All three components were evaluated on 15,442 Vietnamese "
+        "listings and on a seven-class collection of 4,165 vehicle photographs; the "
+        "classifier reaches 97.05% accuracy and 96.54% macro-F1 on 813 unseen images, "
+        "while the two regressions explain less than 5% of the price variance and are "
+        "therefore reported as descriptive market references rather than as valuation "
+        "models."
     )
     report.add(
         para(run("Abstract. ", bold=True) + run(abstract), "abstract")
@@ -426,38 +426,33 @@ def build_report() -> Report:
     report.heading1("Introduction")
     report.p1(
         "The Vietnamese second-hand car market has moved almost entirely online, but the "
-        "information a buyer has to work with is still mostly unstructured. A typical "
-        "listing carries a title, a free-text description, a photograph, a price and a "
-        "handful of fields that the seller filled in inconsistently or left blank. "
-        "Searching such a collection by keyword alone is fragile for two reasons that "
-        "are easy to observe in practice. First, buyers describe a car the way they "
-        "talk about it, so that the same request is written as “Toyota Innova 2020 7 chỗ”, "
-        "“innova 2020 7 seat”, or “xe 7 chỗ đời 2020”, and a literal substring match "
-        "finds only part of the intended set. Second, the most discriminative tokens in "
-        "that vocabulary are short alphanumeric codes: a buyer who writes “C200” wants "
-        "the C200, and a model that has learned that “Mercedes” is close to “Mercedes” "
-        "will happily return the adjacent C300 AMG trim as the answer."
+        "information a buyer works with is still mostly unstructured: a title, a "
+        "free-text description, a photograph, a price, and a handful of fields that the "
+        "seller filled in inconsistently or left blank. Keyword search over such a "
+        "collection is fragile for two reasons. First, buyers describe a car the way "
+        "they talk about it, so that one request is written as “Toyota Innova 2020 7 "
+        "chỗ”, “innova 2020 7 seat” or “xe 7 chỗ đời 2020”, and a literal substring "
+        "match finds only part of the intended set. Second, the most discriminative "
+        "tokens in that vocabulary are short alphanumeric codes: a buyer who writes "
+        "“C200” wants the C200, and a model that has learned that “Mercedes” is close "
+        "to “Mercedes” will happily return the adjacent C300 AMG trim."
     )
     report.body_p(
-        "At the same time, two pieces of information are missing from the listing itself. "
-        "A photograph, when present, identifies the vehicle category far more reliably "
-        "than the seller’s own text, and the price itself carries information that the "
-        "seller does not spell out. Year of production and distance travelled are the "
-        "two variables Vietnamese buyers trust most, yet neither is easy to interpret "
-        "without a sense of how prices are distributed for comparable cars."
+        "Two further pieces of information are missing from the listing itself. A "
+        "photograph identifies the vehicle category more reliably than the seller’s own "
+        "text, and the price carries information that the seller does not spell out. "
+        "Year of production and distance travelled are the two variables Vietnamese "
+        "buyers trust most, yet neither is easy to interpret without a sense of how "
+        "prices are distributed for comparable cars. This report builds one prototype "
+        "that addresses the three gaps at once, and it is deliberately modular: a "
+        "hybrid text retrieval engine, a transfer-learned image classifier and two "
+        "econometric baselines are independent tracks that read the same listing table "
+        "and are presented in one web interface. The design goal is transparency: every "
+        "recommendation is accompanied by the parsed criteria, the per-criterion match "
+        "state of the selected listing and the price trend that produced the chart, so "
+        "that a user can see where a suggestion comes from and reject it when it does "
+        "not fit. The report is organised around three research questions:"
     )
-    report.body_p(
-        "This report builds a single prototype that addresses these three gaps at once. "
-        "The system is deliberately modular rather than monolithic: a hybrid text "
-        "retrieval engine, a transfer-learned image classifier and a pair of "
-        "econometric baselines are three independent tracks that read the same "
-        "underlying listing table and are presented in one web interface. The design "
-        "goal is transparency. Every recommendation that the interface displays is "
-        "accompanied by the parsed criteria, the per-criterion match state of the "
-        "selected listing, and the price trend that produced the chart, so that a user "
-        "can see where a suggestion comes from and reject it when it does not fit."
-    )
-    report.body_p("The report is organised around three research questions:")
     report.bullet(
         "RQ1. How far does a hybrid retrieval engine that combines rule-based attribute "
         "filters, dense multilingual sentence embeddings and sparse TF-IDF matching "
@@ -470,96 +465,61 @@ def build_report() -> Report:
     )
     report.bullet(
         "RQ3. How much of the price variation in the listing table can a "
-        "single-variable ordinary least squares model explain when it is validated on a "
-        "grouped hold-out split, and what does that imply about the limits of using it "
-        "to value an individual car?"
-    )
-    report.body_p(
-        "Section 2 sets out the technical background for the three modelling choices. "
-        "Section 3 describes the data and the cleaning that precedes every experiment. "
-        "Section 4 walks through the architecture of the prototype. Section 5 reports "
-        "the results for each of the three questions, Section 6 discusses what the "
-        "results do and do not support, and Section 8 lists the artefacts required to "
-        "reproduce the work."
+        "single-variable ordinary least squares model explain on a grouped hold-out "
+        "split, and what does that imply about using it to value an individual car?"
     )
 
     # ------------------------------------------------------------ 2 background
     report.heading1("Background")
-    report.heading2("Hybrid Retrieval with Sentence Embeddings and TF-IDF")
     report.p1(
         "Text retrieval on short, heterogeneous documents is classically addressed with "
         "sparse lexical models. In the tf-idf weighting of Salton and Buckley [13], the "
         "weight of a term combines how often it occurs in a document with how widely it "
-        "is distributed across the collection, so that a term appearing in many "
-        "documents contributes little to the discrimination between them. This "
-        "approach remains attractive here because it is transparent and cheap, and "
-        "because it matches the alphanumeric vocabulary of car trims exactly: the "
-        "token “c200” is the same token in the query and in the listing, and no amount "
-        "of semantic smoothing should blur it."
+        "is distributed across the collection. The approach remains attractive here "
+        "because it is transparent, cheap, and matches the alphanumeric vocabulary of "
+        "car trims exactly: the token “c200” is the same token in the query and in the "
+        "listing, and no amount of semantic smoothing should blur it. Lexical matching "
+        "alone, however, fails on the part of the query that carries intent rather than "
+        "identity. Asking for an SUV with seven seats and a budget of one billion VND "
+        "expresses constraints, not vocabulary, and a bag of words cannot tell whether "
+        "the author wanted “SUV” to be satisfied by the body-style field or merely "
+        "mentioned in the prose. Dense retrieval addresses this directly: Sentence-BERT "
+        "[12] adapts the pre-trained bidirectional encoder of Devlin et al. [4] into a "
+        "bi-encoder in which query and document are embedded independently and compared "
+        "by cosine similarity, and multilingual capability comes from distilling an "
+        "English teacher into a student trained on translated sentence pairs [11]. The "
+        "two families are complementary rather than redundant: the embedding captures "
+        "paraphrase and intent, while the sparse vector captures the exact codes and "
+        "proper nouns that distinguish one trim from another."
     )
-    report.body_p(
-        "Lexical matching alone, however, fails on the part of the query that carries "
-        "intent rather than identity. Asking for an SUV with seven seats and a budget "
-        "of one billion VND expresses constraints, not vocabulary, and a bag of words "
-        "cannot tell whether the author wanted “SUV” to be satisfied by the body-style "
-        "field or merely mentioned in the prose. Dense retrieval addresses this "
-        "directly. The Transformer architecture of Vaswani et al. [16] replaces recurrence "
-        "with self-attention, and Sentence-BERT [12] adapts the pre-trained bidirectional "
-        "encoder of Devlin et al. [4] into a bi-encoder in which a query and a document "
-        "are embedded independently and compared by cosine "
-        "similarity, which is the design this system follows. Multilingual capability "
-        "is obtained by distilling an English teacher into a student trained on "
-        "translated sentence pairs [11], so that the "
-        "encoder can place Vietnamese and English descriptions in a shared space."
-    )
-    report.body_p(
-        "The two families of representation are complementary rather than redundant. "
-        "The embedding captures paraphrase and intent and generalises across the many "
-        "ways in which the same vehicle can be described; the sparse vector captures "
-        "the exact alphanumeric codes and proper nouns that distinguish one trim from "
-        "another. The system therefore computes both scores for every candidate and "
-        "combines them, rather than choosing one of them."
-    )
-    report.heading2("Convolutional Neural Networks and Transfer Learning")
     report.p1(
-        "Convolutional neural networks learn hierarchical visual features directly "
-        "from pixels, which removes the need for hand-designed descriptors; the "
-        "architecture of LeCun et al. [9] is the classical reference for the approach. "
-        "Training such a network from scratch requires far more data than the present "
-        "task provides, so transfer learning is the practical choice: a backbone "
-        "pre-trained on ImageNet, a large annotated corpus of natural images "
-        "introduced by Deng et al. [3], is reused and only a small classification head "
-        "is trained on the target domain."
-    )
-    report.body_p(
-        "MobileNetV2 [14] is well suited to this setting. Its inverted residual blocks "
-        "expand the feature map in depth, project it with cheap depthwise "
-        "convolutions and contract it again, and the linear bottlenecks keep the "
-        "representation expressive at low cost, which is what makes the network a good "
-        "candidate for CPU-only inference. Two details of the training procedure "
-        "matter for the results reported later. The first is class re-weighting: the "
-        "image collection is imbalanced, and the effective-number weighting of Cui "
-        "et al. [2] gives each class a weight proportional to the inverse of the expected "
-        "overlap between its samples, which is milder than plain inverse frequency and "
-        "works better in a short fine-tuning schedule. The second is the use of mild "
+        "On the visual side, convolutional neural networks learn hierarchical features "
+        "directly from pixels; the architecture of LeCun et al. [9] is the classical "
+        "reference. Training such a network from scratch requires far more data than "
+        "the present task provides, so transfer learning is the practical choice: a "
+        "backbone pre-trained on ImageNet [3] is reused and only a small classification "
+        "head is trained on the target domain. MobileNetV2 [14] suits this setting, "
+        "because its inverted residual blocks keep the representation expressive at low "
+        "cost, which makes it a good candidate for CPU-only inference. Two training "
+        "details matter for the results reported later. The first is class re-weighting: "
+        "the image collection is imbalanced, and the effective-number weighting of Cui "
+        "et al. [2] gives each class a weight proportional to the inverse of the "
+        "expected overlap between its samples, milder than plain inverse frequency and "
+        "better suited to a short fine-tuning schedule. The second is the use of mild "
         "augmentation only, because aggressive rotation or cropping removes exactly the "
         "grille, badge and headlamp shapes that distinguish the seven brands."
     )
-    report.heading2("Ordinary Least Squares as a Price Baseline")
     report.p1(
-        "The econometric component of the prototype is deliberately modest. Ordinary "
-        "least squares estimates the coefficients that minimise the sum of squared "
-        "residuals, and it is the natural first baseline for the relationship between "
-        "a listing price and a single numeric attribute such as production year or "
-        "odometer reading. The value of such a model in this setting is not prediction "
-        "accuracy but orientation: it quantifies how much of the observed price "
-        "variation is associated with each attribute, and it therefore establishes the "
-        "limit of what an individual attribute can tell a buyer about a price."
-    )
-    report.body_p(
-        "The estimates are obtained through the estimator interface of scikit-learn [10], "
-        "and every reported metric is computed on data that was withheld from the "
-        "fit. The split is grouped rather than row-wise: listings that share a name "
+        "The econometric component is deliberately modest. Ordinary least squares "
+        "estimates the coefficients that minimise the sum of squared residuals, and it "
+        "is the natural first baseline for the relationship between a listing price and "
+        "a single numeric attribute such as production year or odometer reading. Its "
+        "value here is not prediction accuracy but orientation: it quantifies how much "
+        "of the observed price variation is associated with each attribute, and so "
+        "establishes the limit of what an individual attribute can tell a buyer about a "
+        "price. The estimates are obtained through the estimator interface of "
+        "scikit-learn [10], and every reported metric is computed on data withheld from "
+        "the fit. The split is grouped rather than row-wise: listings that share a name "
         "and a price are the same car reposted on several platforms, and a row-wise "
         "split would place such near-duplicates on both sides of the boundary and "
         "inflate the apparent generalisation of the model."
@@ -567,131 +527,80 @@ def build_report() -> Report:
 
     # ------------------------------------------------------------- 3 dataset
     report.heading1("Dataset and Preprocessing")
-    report.heading2("Listing Data")
     report.p1(
         "The primary corpus is a public collection of used-car listings scraped from "
-        "Vietnamian marketplaces [8]. It contains 15,442 records described by 17 columns, "
-        "among them the model name, the asking price as free text, the production year, "
-        "the distance travelled, the body style, the fuel type, the transmission, the "
-        "number of seats and doors, the exterior and interior colours, the origin, the "
-        "condition and the location. The free-text price field is the reason the "
-        "collection needs cleaning before any statistic can be computed: prices appear "
-        "as “1 Tỷ 118 Triệu”, as “646 Triệu”, or occasionally as a bare number, and "
-        "the parser converts these forms into a single numeric column expressed in "
-        "millions of VND. Every listing yields a positive price after conversion, so "
-        "no record is discarded at this stage."
+        "Vietnamese marketplaces [8]: 15,442 records described by 17 columns, among "
+        "them the model name, the asking price as free text, the production year, the "
+        "distance travelled, the body style, the fuel type, the transmission, the number "
+        "of seats and doors, the colours, the origin, the condition and the location. "
+        "The free-text price field is the reason the collection needs cleaning before "
+        "any statistic can be computed: prices appear as “1 Tỷ 118 Triệu”, as “646 "
+        "Triệu”, or occasionally as a bare number, and the parser converts these forms "
+        "into a single numeric column in millions of VND. Every listing yields a "
+        "positive price, so no record is discarded at this stage. The remaining cleaning "
+        "is conservative. Missing values are never imputed; they are treated as unknown, "
+        "and a listing whose year is unknown is simply excluded from the year-based "
+        "analysis. The unknown rates are uneven: distance travelled is unknown for "
+        "22.95% of listings, by far the most serious gap, whereas the transmission is "
+        "recovered from the description text for all but 0.01% of records, and body "
+        "style, fuel type, production year and seat count are each unknown for 3.57%."
     )
     report.body_p(
-        "The remaining cleaning steps are conservative and are documented so that they "
-        "can be audited. Missing values are never imputed; they are treated as "
-        "unknown, and a listing whose year is unknown is simply excluded from the "
-        "year-based analysis. The proportions of unknown values are uneven across the "
-        "collection and are shown in Table 1: the distance travelled is unknown for "
-        "22.95% of the listings, which is by far the most serious gap, whereas the "
-        "transmission is recovered from the description text for all but 0.01% of the "
-        "records. Body style, fuel type, production year and seat count are each "
-        "unknown for 3.57% of the listings, and the interior colour for 7.96%."
-    )
-    report.table_caption(
-        "Proportion of listings with unknown attribute values in the cleaned corpus "
-        "(n = 15,442)."
-    )
-    report.table(
-        ["Attribute", "Source column", "Unknown (%)"],
-        [
-            ["Distance travelled", "Số Km đã đi", "22.95"],
-            ["Interior colour", "Màu nội thất", "7.96"],
-            ["Number of doors", "Số cửa", "4.03"],
-            ["Exterior colour", "Màu ngoại thất", "3.66"],
-            ["Production year", "Năm sản xuất", "3.57"],
-            ["Body style", "Kiểu dáng", "3.57"],
-            ["Fuel type", "Động cơ (engine)", "3.57"],
-            ["Seat count", "Số chỗ ngồi", "3.57"],
-            ["Origin", "Xuất xứ", "3.57"],
-            ["Transmission", "Description (derived)", "0.01"],
-        ],
-        [26, 44, 18],
-    )
-    report.p1(
-        "The production year is the attribute that most strongly shapes the price "
-        "analysis, and it is present for 14,891 listings. Their distribution, shown "
-        "in Fig. 1, is concentrated in the second half of the 2010s, with a median "
-        "year of 2020 and a range from 1989 to 2024. Asking prices are spread over "
-        "three orders of magnitude: the median listing is priced at 659 million VND, "
-        "the mean is pulled up to 1,232 million VND by a small number of expensive "
-        "vehicles, and the most expensive record in the table is quoted at 63,568 "
-        "million VND. Such extreme values are retained because they are genuine "
-        "market observations rather than parsing artefacts, but they do mean that "
-        "any regression on price has to be read as descriptive rather than "
-        "predictive, a point that Section 5 returns to."
+        "The production year is present for 14,891 listings whose distribution, shown in "
+        "Fig. 1, is concentrated in the second half of the 2010s, with a median of 2020 "
+        "and a range from 1989 to 2024. Prices are spread over three orders of "
+        "magnitude: the median listing is priced at 659 million VND, the mean is pulled "
+        "up to 1,232 million VND by a few expensive vehicles, and the most expensive "
+        "record is quoted at 63,568 million VND. Such extremes are retained because "
+        "they are genuine market observations rather than parsing artefacts, but they "
+        "mean that any regression on price must be read as descriptive rather than "
+        "predictive. A further characteristic constrains the interpretation: 3,533 "
+        "listings share both a model name and a price with an earlier listing, almost "
+        "certainly the same vehicle reposted on several platforms. The retrieval "
+        "pipeline removes them from the displayed results and the regression analysis "
+        "groups them together, so that a repost cannot appear in both the training and "
+        "the test partition."
     )
     report.figure(
         "fig1_year_distribution.png",
-        "Distribution of the 14,891 listings with a known production year. The bulk "
-        "of the market consists of vehicles built between 2015 and 2023.",
+        "Distribution of the 14,891 listings with a known production year. The bulk of "
+        "the market consists of vehicles built between 2015 and 2023.",
+        width_ratio=0.62,
     )
-    report.body_p(
-        "A further characteristic of the corpus deserves mention because it constrains "
-        "how the results may be interpreted. There are 3,533 listings that share both "
-        "a model name and a price with an earlier listing. These are almost certainly "
-        "the same vehicle reposted on several platforms, and they inflate the "
-        "apparent size of the sample. The retrieval pipeline removes them from the "
-        "displayed results, and the regression analysis groups them together so that "
-        "a repost cannot appear in both the training and the test partition."
-    )
-    report.heading2("Image Data")
     report.p1(
         "The visual component uses a separate public collection of vehicle photographs "
         "[7] organised into seven category folders: Audi, Hyundai Creta, Mahindra "
-        "Scorpio, Rolls Royce, Maruti Suzuki Swift, Tata Safari and Toyota Innova. "
-        "The collection is split by the publisher into 3,352 training and 813 test "
-        "photographs, which is close to the conventional 80:20 proportion and means "
-        "that the test split can be used exactly as published."
-    )
-    report.body_p(
-        "The class distribution is markedly imbalanced, as Table 2 and Fig. 2 show. "
-        "Audi accounts for 1,013 of the 4,165 images, or 24.3% of the collection, and "
-        "Toyota Innova for a further 23.2%, so the two largest classes alone "
-        "represent 47.5% of the data. The smallest class, Hyundai Creta, contributes "
-        "338 images, a factor of three fewer than the largest. A model evaluated on "
-        "accuracy alone could therefore obtain a respectable score by favouring the "
-        "majority classes, which is why the balanced accuracy and the macro-averaged "
-        "F1 score are reported alongside the overall accuracy."
-    )
-    report.table_caption(
-        "Number of photographs per vehicle class in the training and test splits."
-    )
-    report.table(
-        ["Vehicle class", "Train", "Test", "Total", "Share (%)"],
-        [
-            ["Audi", "814", "199", "1,013", "24.3"],
-            ["Hyundai Creta", "271", "67", "338", "8.1"],
-            ["Mahindra Scorpio", "316", "75", "391", "9.4"],
-            ["Rolls Royce", "311", "74", "385", "9.2"],
-            ["Maruti Suzuki Swift", "424", "102", "526", "12.6"],
-            ["Tata Safari", "441", "106", "547", "13.1"],
-            ["Toyota Innova", "775", "190", "965", "23.2"],
-            ["Total", "3,352", "813", "4,165", "100.0"],
-        ],
-        [34, 14, 14, 16, 22],
-    )
-    report.figure(
-        "fig2_image_counts.png",
-        "Training and test photographs for the seven vehicle classes. The imbalance "
-        "between the largest and the smallest class is a factor of three.",
+        "Scorpio, Rolls Royce, Maruti Suzuki Swift, Tata Safari and Toyota Innova. The "
+        "publisher splits it into 3,352 training and 813 test photographs, so the test "
+        "split can be used exactly as published. The class distribution is markedly "
+        "imbalanced: Audi accounts for 1,013 of the 4,165 images, or 24.3% of the "
+        "collection, and Toyota Innova for a further 23.2%, so the two largest classes "
+        "alone represent 47.5% of the data, whereas the smallest class, Hyundai Creta, "
+        "contributes only 338 images, a factor of three fewer than the largest. A model "
+        "evaluated on accuracy alone could therefore obtain a respectable score by "
+        "favouring the majority classes, which is why the balanced accuracy and the "
+        "macro-averaged F1 score are reported alongside the overall accuracy."
     )
 
     # ------------------------------------------------------- 4 system design
     report.heading1("System Design")
-    report.heading2("Architecture Overview")
     report.p1(
-        "The prototype is a single Streamlit application [15] organised as three decoupled "
-        "processing tracks that share one in-memory listing table. The separation is "
-        "not merely cosmetic: each track can fail without taking the others down. "
-        "If the sentence embedding model cannot be loaded, the retrieval engine falls "
-        "back to TF-IDF matching and reports the degradation in the interface, while "
-        "the classifier and the regression charts continue to work. Fig. 3 gives the "
-        "overall arrangement."
+        "The prototype is a single Streamlit application [15] organised as three "
+        "decoupled processing tracks that share one in-memory listing table. The "
+        "separation is not merely cosmetic: each track can fail without taking the "
+        "others down. If the sentence embedding model cannot be loaded, the retrieval "
+        "engine falls back to TF-IDF matching and reports the degradation in the "
+        "interface, while the classifier and the regression charts continue to work. "
+        "Fig. 2 gives the overall arrangement. Two engineering decisions keep the "
+        "application responsive on commodity hardware. First, the sentence embeddings "
+        "of all 15,442 listings and the TF-IDF matrix are computed once and cached on "
+        "disk; the cache key is a SHA-256 digest of the model name together with a "
+        "fingerprint of the dataset file, so a change to the data or to the model "
+        "invalidates the cache automatically while an unchanged file reuses it. Second, "
+        "the embedding model is loaded lazily, only when a query actually needs semantic "
+        "scoring. The model itself is the twelve-layer multilingual MiniLM bi-encoder "
+        "released on the Hugging Face Hub [5], and both the embedding and the inference "
+        "step run comfortably on a multi-core CPU, so no GPU is required anywhere."
     )
     report.figure(
         "fig3_architecture.png",
@@ -699,69 +608,41 @@ def build_report() -> Report:
         "before hybrid ranking, photographs are classified by a transfer-learned "
         "MobileNetV2, and the listing table feeds both the regression baselines and "
         "the price trend charts.",
+        width_ratio=0.78,
     )
-    report.body_p(
-        "Two engineering decisions keep the application responsive on commodity "
-        "hardware. First, the sentence embeddings of all 15,442 listings and the "
-        "TF-IDF matrix are computed once and cached on disk. The cache key is a "
-        "SHA-256 digest of the model name together with a fingerprint of the dataset "
-        "file, so a change to the listing data or to the embedding model invalidates "
-        "the cache automatically, while an unchanged file reuses it. Second, the "
-        "embedding model is loaded lazily, only when a query actually needs semantic "
-        "scoring. The model itself is the twelve-layer multilingual MiniLM bi-encoder "
-        "released on the Hugging Face Hub [5]. Both the embedding and the inference "
-        "step run comfortably on a "
-        "multi-core CPU, and no GPU is required for any part of the system."
-    )
-    report.heading2("Query Parsing and Attribute Extraction")
     report.p1(
         "A natural language request in Vietnamese is first converted into a set of "
         "explicit criteria. Each criterion records the column it constrains, the "
-        "comparison operator, the value and a human-readable label that is shown back "
-        "to the user, which keeps the extraction step explainable. The parser works "
-        "with regular expressions on an accent-stripped, lower-cased copy of the "
-        "query, and it recognises up to fourteen attributes: location, distance, "
-        "price, production year, interior colour, exterior colour, fuel type, "
-        "transmission, origin, condition, seat count, door count, body style and "
-        "brand."
+        "comparison operator, the value and a human-readable label shown back to the "
+        "user, which keeps the extraction step explainable. The parser works with "
+        "regular expressions on an accent-stripped, lower-cased copy of the query and "
+        "recognises up to fourteen attributes: location, distance, price, production "
+        "year, interior colour, exterior colour, fuel type, transmission, origin, "
+        "condition, seat count, door count, body style and brand. The order in which the "
+        "query is examined is not arbitrary, because several patterns are ambiguous in "
+        "isolation. Locations come before fuel type and colour, because a place name "
+        "such as “Đồng Nai” would otherwise be matched by a colour or fuel pattern. "
+        "Distance comes before price and year, because the digits “2000” in “2000 km” "
+        "denote a distance and not a model year. Interior colour comes before exterior "
+        "colour, because “nội thất màu đen” contains the word for colour but refers to "
+        "the interior. Once a pattern matches, the span it covered is blanked rather "
+        "than deleted, so the remaining tokens are not concatenated into spurious "
+        "matches. Brand detection is the one criterion that does not rely on a fixed list "
+        "of triggers: an exact, word-boundary match against 28 brand names is tried "
+        "first, and if that fails the remaining tokens are compared with a "
+        "character-level similarity measure, a fuzzy match being accepted only when the "
+        "best score reaches 0.76 and exceeds the second best by at least 0.04."
     )
-    report.body_p(
-        "The order in which the parser examines the query is not arbitrary, because "
-        "several of these patterns are ambiguous in isolation. Locations are extracted "
-        "before fuel type and colour, because a place name such as “Đồng Nai” would "
-        "otherwise be matched by a colour or fuel pattern. The distance is extracted "
-        "before the price and the year, because the digits “2000” in “2000 km” denote "
-        "a distance and not a model year. The interior colour is matched before the "
-        "exterior colour, because the phrase “nội thất màu đen” contains the word for "
-        "colour but refers to the interior. Once a pattern has been matched, the span "
-        "it covered is blanked rather than deleted, so that the remaining tokens are "
-        "not concatenated into spurious matches."
-    )
-    report.body_p(
-        "Brand detection is the one criterion that does not rely on a fixed list of "
-        "triggers. An exact, word-boundary match against a list of 28 brand names is "
-        "tried first. If that fails, the remaining tokens are compared against the "
-        "same list with a character-level similarity measure, and a fuzzy match is "
-        "accepted only when the best score reaches 0.76 and exceeds the second best "
-        "by at least 0.04; the margin requirement prevents a short brand name from "
-        "capturing an unrelated word. As a last resort, the parser checks whether a "
-        "complete model name from the corpus occurs in the query, which covers the "
-        "case in which the user simply types the trim that appears in the listings."
-    )
-    report.body_p(
-        "The extracted criteria are then applied as a hard filter. Every criterion "
-        "must hold simultaneously, and a listing whose value for a constrained "
-        "attribute is unknown does not satisfy that criterion. The strict filter "
-        "therefore narrows the 15,442 listings to a candidate set whose size depends "
-        "entirely on the query: the three benchmark requests of Section 5 leave "
-        "3,450, 44 and 287 candidates respectively."
-    )
-    report.heading2("Hybrid Scoring")
     report.p1(
-        "The surviving candidates are scored by two complementary representations and "
-        "the two scores are fused. Let \\(q\\) be the embedding of the query and "
-        "\\(e_i\\) the embedding of listing \\(i\\); because both vectors are "
-        "normalised, the inner product is the cosine similarity"
+        "The extracted criteria are applied as a hard filter. Every criterion must hold "
+        "simultaneously, and a listing whose value for a constrained attribute is "
+        "unknown does not satisfy that criterion. The strict filter therefore narrows "
+        "the 15,442 listings to a candidate set whose size depends entirely on the "
+        "query: the three benchmark requests of Section 5 leave 3,450, 44 and 287 "
+        "candidates respectively. The survivors are scored by two complementary "
+        "representations and the two scores are fused. Let \\(q\\) be the embedding of "
+        "the query and \\(e_i\\) the embedding of listing \\(i\\); because both vectors "
+        "are normalised, the inner product is the cosine similarity"
     )
     report.equation(
         [
@@ -776,9 +657,9 @@ def build_report() -> Report:
     )
     report.body_p(
         "The sparse score is the tf-idf inner product between the normalised query "
-        "vector and the corresponding row of the listing matrix. The two scores are "
-        "not on a common scale, so each is min-max normalised across the candidate "
-        "set before they are combined, and the fused score is"
+        "vector and the corresponding row of the listing matrix. The two scores are not "
+        "on a common scale, so each is min-max normalised across the candidate set "
+        "before they are combined, and the fused score is"
     )
     report.equation(
         [
@@ -798,117 +679,72 @@ def build_report() -> Report:
     )
     report.body_p(
         "where \\(w = 0.70\\) is the default weight on the semantic component and "
-        "\\(s̃\\) denotes a min-max normalised score. The weighting is exposed as a "
-        "control in the interface, because the balance it encodes is a design "
-        "decision rather than a law: a user who is searching for a specific trim "
-        "wants lexical matching to dominate, while a user who describes a car in "
-        "general terms benefits from the semantic component. The system also offers "
-        "the two scores in isolation, and it is the comparison between the three "
-        "modes that constitutes the retrieval evaluation of Section 5."
-    )
-    report.heading2("Progressive Relaxation")
-    report.p1(
-        "A strict filter is brittle in a heterogeneous corpus. A buyer who asks for a "
-        "Toyota from 2020 with seven seats and a budget of 700 million VND may have "
-        "no exact match even though the market contains the car they want, because a "
-        "single listing lacks the interior colour they mentioned or sits 20 million "
-        "VND above the ceiling. The system therefore falls back through a fixed "
-        "sequence of stages, and the sequence is ordered so that the least "
-        "informative constraints are given up last."
-    )
-    report.body_p(
-        "The five stages are: keep every criterion; release the price band; release "
-        "the production year; release the colour, distance, location, fuel, "
-        "transmission, origin, condition and door-count criteria together; and "
-        "finally release the seat count and the body style. The brand criterion is "
-        "never released, because a search for a Toyota that returns a Hyundai is not "
-        "a relaxed result but a wrong answer. Each stage is attempted in turn and the "
-        "first one that yields at least one candidate is used, so a query that is "
-        "already satisfiable is never relaxed at all."
-    )
-    report.body_p(
-        "Relaxation is never silent. The interface names the criteria that were "
+        "\\(s̃\\) a min-max normalised score, exposed as an interface control because "
+        "the balance it encodes is a design decision rather than a law. A strict filter "
+        "is in turn brittle in a heterogeneous corpus, so when no listing satisfies all "
+        "criteria the system falls back through five fixed stages, releasing the price "
+        "band, then the production year, then the colour, distance, location, fuel, "
+        "transmission, origin, condition and door-count criteria together, and finally "
+        "the seat count and the body style. The brand criterion is never released, "
+        "because a search for a Toyota that returns a Hyundai is not a relaxed result "
+        "but a wrong answer. Each stage is attempted in turn and the first that yields "
+        "a candidate is used, so a query that is already satisfiable is never relaxed at "
+        "all. Relaxation is never silent: the interface names the criteria that were "
         "released, and each displayed listing shows the match state of every original "
-        "criterion, so that a suggestion with an unmet constraint is visibly "
-        "different from one that satisfies the request exactly. When the price band "
-        "has been released, candidates are ordered by their distance from the "
-        "requested budget before the retrieval score is consulted, which keeps the "
-        "suggestions closest to the stated budget at the top of the list."
+        "criterion."
     )
-    report.heading2("Image Recognition and Confidence Gating")
     report.p1(
         "The classifier is MobileNetV2 with the ImageNet weights and the fully "
-        "connected top removed, assembled with the Keras API of TensorFlow [1], and "
-        "followed by a classification head consisting of a "
-        "global average pooling layer, a dropout layer with rate 0.30, a dense layer "
-        "of 128 units with ReLU activation, a second dropout with rate 0.20 and a "
-        "softmax output over the seven classes. The network has 2,422,855 parameters "
-        "in total. Training proceeds in two stages: five epochs with the backbone "
-        "frozen and a learning rate of 10⁻³, followed by fine-tuning of the whole "
-        "network at 10⁻⁴, with early stopping on validation accuracy and a learning "
-        "rate schedule that halves the rate when validation loss stops improving."
+        "connected top removed, assembled with the Keras API of TensorFlow [1], followed "
+        "by a classification head consisting of global average pooling, dropout at rate "
+        "0.30, a dense layer of 128 units with ReLU activation, a second dropout at rate "
+        "0.20 and a softmax output over the seven classes, for 2,422,855 parameters in "
+        "total. Training proceeds in two stages: five epochs with the backbone frozen "
+        "at a learning rate of 10⁻³, then fine-tuning of the whole network at 10⁻⁴, with "
+        "early stopping on validation accuracy. At inference a photograph is converted "
+        "to RGB, resized to 224 × 224 pixels and scaled to the unit interval exactly as "
+        "in training, and the softmax output is inspected. A prediction is accepted only "
+        "when the probability of the leading class reaches a threshold of 0.60; below "
+        "that value the system reports the result as uncertain instead of naming a "
+        "class, because a refusal is preferable to a confident wrong answer."
     )
-    report.body_p(
-        "At inference time a photograph is converted to RGB, resized to "
-        "224 × 224 pixels and scaled to the unit interval, exactly as in training, "
-        "and the softmax output is inspected. A prediction is accepted only when the "
-        "probability of the leading class reaches a threshold of 0.60; below that "
-        "value the system reports the result as uncertain instead of naming a class. "
-        "The threshold was chosen so that a wrong answer is preferable to a "
-        "confident wrong answer, and it can be varied interactively to observe how "
-        "many predictions would be rejected at different levels."
-    )
-    report.heading2("Price Trend Inspection")
     report.p1(
         "The third track fits ordinary least squares models to the price against "
-        "production year and against odometer reading and renders the fit together "
-        "with binned medians and an inter-quartile band, so that the user sees the "
-        "spread of the market rather than a single line. When a search has already "
-        "fixed the brand, the analysis is restricted to that brand, which is what "
-        "makes the chart informative for a buyer who is considering one model rather "
-        "than the market as a whole."
+        "production year and against odometer reading and renders the fit together with "
+        "binned medians and an inter-quartile band, so that the user sees the spread of "
+        "the market rather than a single line; when a search has already fixed the "
+        "brand, the analysis is restricted to that brand. The price distribution across "
+        "body styles complements the regression output: the medians differ by more "
+        "than an order of magnitude between the cheapest and the most expensive body "
+        "style, which suggests that body style orients a buyer better than either of "
+        "the two numeric variables examined here."
     )
     report.figure(
-        "fig4_price_vs_year.png",
-        "Listing price against production year with the fitted regression line, the "
-        "binned medians and the inter-quartile band. The vertical axis is truncated "
-        "at 5,000 million VND; the slope is positive but the spread at every year is "
-        "far wider than the effect.",
-    )
-    report.figure(
-        "fig5_price_vs_mileage.png",
-        "Listing price against odometer reading for the 10,728 listings within "
-        "0–100,000 km. The fitted slope is negative and close to zero, which "
-        "reflects the weak association between distance and price in this corpus.",
-    )
-    report.body_p(
-        "The price distribution across body styles, shown in Fig. 6, complements the "
-        "regression output. The medians differ by more than an order of magnitude "
-        "between the cheapest and the most expensive body style, which suggests that "
-        "body style is a more informative attribute for orienting a buyer than either "
-        "of the two numeric variables examined here."
-    )
-    report.figure(
-        "fig6_price_by_body_style.png",
-        "Distribution of listing prices by body style on a logarithmic scale. The "
-        "spread within each group is wide, so body style explains the position of a "
-        "car in the price range better than year or mileage do.",
+        "fig4_price_panels.png",
+        "Listing price against production year (left) and against odometer reading "
+        "(right), with the fitted regression line, the binned medians and the "
+        "inter-quartile band. The vertical axis is truncated at 5,000 million VND; the "
+        "slopes are small and the spread at every value is far wider than the effect.",
+        width_ratio=0.95,
     )
 
     # ------------------------------------------------------------ 5 results
     report.heading1("Results")
-    report.heading2("Retrieval Behaviour on Benchmark Queries")
     report.p1(
         "The retrieval engine was evaluated on three representative requests, each "
         "chosen to exercise a different failure mode of keyword search: a broad "
         "category with a budget constraint, a brand and model with an explicit "
         "configuration, and a brand with an alphanumeric trim designation. For each "
-        "request the three retrieval modes were run over the identical candidate set "
-        "and the top-ranked listing was recorded. Table 3 gives the outcome."
+        "request the three retrieval modes were run over the identical candidate set and "
+        "the top-ranked listing was recorded. Table 1 gives the outcome. The attribute "
+        "filter behaves as intended: for the Innova query the three extracted criteria "
+        "reduce the corpus to 44 listings, and all three retrieval modes agree on the "
+        "same top result, the 2020 Innova V 2.0 with an automatic transmission at 699 "
+        "million VND."
     )
     report.table_caption(
-        "Top-ranked listing for three benchmark queries under the hybrid, semantic "
-        "and TF-IDF retrieval modes."
+        "Top-ranked listing for three benchmark queries under the hybrid, semantic and "
+        "TF-IDF retrieval modes."
     )
     report.table(
         [
@@ -932,61 +768,41 @@ def build_report() -> Report:
         [21, 12, 10, 40, 17],
     )
     report.body_p(
-        "The attribute filter behaves as intended. For the Innova query the three "
-        "criteria that the parser extracts, a 2020 model year, seven seats and the "
-        "Toyota brand, reduce the corpus to 44 listings, and all three retrieval "
-        "modes agree on the same top result, the 2020 Innova V 2.0 with an automatic "
-        "transmission at 699 million VND. When the query is unambiguous and the "
-        "candidate set is small, the two representations are not in conflict and the "
-        "hybrid score inherits the agreement."
+        "The broad SUV query separates the modes more clearly. The hybrid ranking returns "
+        "a 2024 Toyota Avanza Premio at 565 million VND, well inside the budget, and the "
+        "semantic mode returns the same model from 2022 at 520 million VND. The lexical "
+        "mode behaves differently: it returns a Lynk & Co 01 from 2024 at 999 million VND, "
+        "the most expensive car in the candidate set, because the query shares the token "
+        "“SUV” with that listing while the other two vehicles are described with "
+        "different wording. The hybrid score avoids this failure by giving the semantic "
+        "component the larger weight, but the example also shows that the lexical score "
+        "is not a reliable ranking signal on its own. The trim query is the most "
+        "instructive of the three. The parser extracts the Mercedes-Benz brand and the "
+        "2021 model year and leaves 287 candidates, but the requested trim “C200” is not "
+        "among the parsed criteria, because trim designations are alphanumeric codes "
+        "that the regular expressions cannot distinguish from one another. Both the "
+        "hybrid and the semantic mode rank the C300 AMG first, at 1,350 million VND, "
+        "while only the lexical mode returns the C200 Exclusive at 1,220 million VND. "
+        "This is the characteristic weakness of a bi-encoder: query and document are "
+        "embedded independently, so the difference between two adjacent trim codes is "
+        "smaller than the differences between them and unrelated vehicles. Three "
+        "observations follow. First, rule-based extraction is reliable when the "
+        "requested attributes are categorical, numeric or explicitly named. Second, the "
+        "two representations fail in different ways, which is precisely the argument for "
+        "fusing them rather than choosing one. Third, the trim confusion is not fixable "
+        "by re-weighting the fusion: it requires a mechanism that compares query and "
+        "document jointly, such as a cross-encoder reranking stage or an explicit trim "
+        "token extracted from the title."
     )
-    report.body_p(
-        "The broad SUV query separates the modes more clearly. The hybrid ranking "
-        "returns a 2024 Toyota Avanza Premio at 565 million VND, well inside the "
-        "budget, and the semantic mode returns the same model from 2022 at 520 "
-        "million VND. The lexical mode behaves differently: it returns a Lynk & Co 01 "
-        "from 2024 at 999 million VND, the most expensive car in the candidate set, "
-        "because the query shares the token “SUV” with that listing while the other "
-        "two vehicles are described with different wording. The hybrid score avoids "
-        "this failure by giving the semantic component the larger weight, but the "
-        "example also shows that the lexical score is not a reliable ranking signal "
-        "on its own."
-    )
-    report.body_p(
-        "The trim query is the most instructive of the three. The parser extracts the "
-        "Mercedes-Benz brand and the 2021 model year and leaves 287 candidates, but "
-        "the requested trim “C200” is not among the parsed criteria, because trim "
-        "designations are alphanumeric codes that the regular expressions cannot "
-        "distinguish from one another. Both the hybrid and the semantic mode rank the "
-        "C300 AMG first, at 1,350 million VND, while only the lexical mode returns "
-        "the C200 Exclusive at 1,220 million VND. This is the characteristic weakness "
-        "of a bi-encoder: the query and the document are embedded independently, so "
-        "the difference between two adjacent trim codes is smaller than the "
-        "differences between them and unrelated vehicles. The hybrid score inherits "
-        "the mistake because the semantic component dominates."
-    )
-    report.body_p(
-        "Three observations follow from these experiments. First, rule-based "
-        "extraction is reliable when the requested attributes are categorical, "
-        "numeric or explicitly named, and the candidate sets it produces are small "
-        "enough for the ranking stage to work with. Second, the two representations "
-        "fail in different ways, which is precisely the argument for fusing them "
-        "rather than choosing one. Third, the trim confusion is not fixable by "
-        "re-weighting the fusion: it requires a mechanism that compares the query and "
-        "the document jointly, such as a cross-encoder reranking stage or an explicit "
-        "trim token extracted from the title. This is the clearest direction for "
-        "future work and it is discussed again in Section 6."
-    )
-    report.heading2("Image Classification Performance")
     report.p1(
         "The classifier was evaluated once, on the published test split of 813 "
-        "photographs that was never used for training or for the validation split. "
-        "It reaches 97.05% accuracy, a balanced accuracy of 96.15% and a macro-averaged "
-        "F1 score of 96.54%, with a test loss of 0.1119. The gap between the overall "
-        "accuracy and the balanced accuracy is only 0.90 percentage points, which "
-        "indicates that the model does not trade minority-class performance for "
-        "majority-class accuracy. Table 4 lists the per-class scores and Fig. 7 "
-        "shows the confusion matrix."
+        "photographs that was never used for training or for the validation split. It "
+        "reaches 97.05% accuracy, a balanced accuracy of 96.15% and a macro-averaged F1 "
+        "score of 96.54%, with a test loss of 0.1119. The gap between overall accuracy "
+        "and balanced accuracy is only 0.90 percentage points, which indicates that the "
+        "model does not trade minority-class performance for majority-class accuracy. "
+        "Table 2 lists the per-class scores and Fig. 3 shows the confusion matrix "
+        "together with the per-class bars."
     )
     report.table_caption(
         "Per-class precision, recall and F1 score of MobileNetV2 on the 813 test "
@@ -1007,61 +823,60 @@ def build_report() -> Report:
         [32, 13, 19, 18, 18],
     )
     report.figure(
-        "fig7_confusion_matrix.png",
-        "Row-normalised confusion matrix of MobileNetV2 on the 813 test photographs. "
-        "The diagonal dominates, and the visible confusions are between neighbouring "
-        "categories such as the two luxury saloons.",
+        "fig5_cnn_evaluation.png",
+        "Left: row-normalised confusion matrix of MobileNetV2 on the 813 test "
+        "photographs; the diagonal dominates and the visible confusions are between "
+        "neighbouring categories such as the two luxury saloons. Right: per-class "
+        "precision, recall and F1 score against the overall accuracy and the balanced "
+        "accuracy. Every class lies in a narrow band around the two reference lines, "
+        "confirming that the imbalance of the collection has been neutralised.",
+        width_ratio=0.95,
     )
     report.body_p(
-        "The confusion matrix is dominated by the diagonal, and the errors that do "
-        "occur are concentrated in the classes that a buyer is most likely to "
-        "encounter in the wild. The largest single confusion is Audi being read as "
-        "Rolls Royce, three cases out of 199, which is understandable given that the "
-        "two cars share a front-grille shape that dominates a photograph taken at an "
-        "angle. Hyundai Creta is the weakest class, with a recall of 89.55% and an F1 "
-        "score of 92.31%, and it is also the class with the fewest test images; its "
-        "errors are spread over Rolls Royce, Tata Safari and Toyota Innova, the "
-        "other high-bodied vehicles in the collection. Tata Safari shows the mirror "
-        "image behaviour, with the highest recall of all classes at 99.06% and the "
-        "lowest precision at 94.59%, so it absorbs some of the compact-SUV "
-        "confusions."
+        "The confusion matrix is dominated by the diagonal, and the errors that do occur "
+        "are concentrated in the classes a buyer is most likely to encounter in the "
+        "wild. The largest single confusion is Audi being read as Rolls Royce, three "
+        "cases out of 199, which is understandable given that the two cars share a "
+        "front-grille shape that dominates a photograph taken at an angle. Hyundai "
+        "Creta is the weakest class, with a recall of 89.55% and an F1 score of 92.31%, "
+        "and it is also the class with the fewest test images; its errors are spread "
+        "over Rolls Royce, Tata Safari and Toyota Innova, the other high-bodied vehicles "
+        "in the collection. Tata Safari shows the mirror image behaviour, with the "
+        "highest recall of all classes at 99.06% and the lowest precision at 94.59%, so "
+        "it absorbs some of the compact-SUV confusions. All seven classes fall between "
+        "89.55% and 99.06% recall, so the class re-weighting introduced during training "
+        "is doing what it was introduced to do. The confidence gate of 0.60 was applied "
+        "to the predictions in the interface: on well-separated categories the softmax "
+        "output is close to one and the gate never rejects a prediction, while it "
+        "becomes active on genuinely ambiguous photographs, typically those taken from "
+        "an oblique angle or in poor light. This is the intended behaviour for a "
+        "decision-support tool: a refusal is more useful to a buyer than a confident "
+        "misidentification."
     )
-    report.figure(
-        "fig8_per_class_scores.png",
-        "Per-class precision, recall and F1 score against the overall accuracy and "
-        "the balanced accuracy. Every class lies in a narrow band around the two "
-        "reference lines, confirming that the imbalance of the collection has been "
-        "neutralised.",
-    )
-    report.body_p(
-        "Fig. 8 makes the same point graphically. All seven classes fall between "
-        "89.55% and 99.06% recall, and the two reference lines, the overall accuracy "
-        "and the balanced accuracy, sit close together and close to the middle of "
-        "that band. The class re-weighting during training is therefore doing what it "
-        "was introduced to do: a model trained on this imbalanced collection without "
-        "re-weighting would have concentrated its errors on exactly the classes that "
-        "the balanced accuracy exposes."
-    )
-    report.body_p(
-        "The confidence gate of 0.60 was applied to the predictions in the "
-        "interface. On well-separated categories such as the trucks and the luxury "
-        "saloons, the softmax output is close to one and the gate never rejects a "
-        "prediction. It becomes active on the genuinely ambiguous photographs, "
-        "typically those taken from an oblique angle or in poor light, and the "
-        "interface then reports that the class could not be determined. This is the "
-        "intended behaviour for a decision-support tool: a refusal is more useful to "
-        "a buyer than a confident misidentification."
-    )
-    report.heading2("Price Regression Results")
     report.p1(
         "Both regressions were fitted with the same protocol. The listings are split "
-        "into a training part of 80% and a test part of 20% using a grouped split "
-        "on the pair of model name and price, so that a listing and its repost cannot "
-        "fall on opposite sides of the boundary. The fitted coefficients are compared "
-        "against a mean-predictor baseline fitted on the same training part, and the "
-        "stability of the estimate is assessed with a five-fold grouped "
-        "cross-validation performed inside the training part only. The results are "
-        "summarised in Table 5 and discussed below."
+        "into a training part of 80% and a test part of 20% using a grouped split on "
+        "the pair of model name and price, so that a listing and its repost cannot fall "
+        "on opposite sides of the boundary. The fitted coefficients are compared against "
+        "a mean-predictor baseline fitted on the same training part, and the stability "
+        "of the estimate is assessed with a five-fold grouped cross-validation performed "
+        "inside the training part only. The results are summarised in Table 3. The year "
+        "model has a clearly positive slope: a listing is worth about 77.41 million VND "
+        "more for each additional year of production, which is consistent with the "
+        "direction a buyer would expect. The descriptive \\(R^2\\) of 0.034 and the test "
+        "\\(R^2\\) of 0.047 are nevertheless very low, and the grouped cross-validation "
+        "on the training part gives 0.0349 with a standard deviation of 0.0158 across "
+        "the five folds. The mean-predictor baseline achieves a test RMSE of 1,744.9 "
+        "million VND, while the regression achieves 1,703.3 million VND, an improvement "
+        "of 2.4% that is small compared with the dispersion of prices in the corpus. "
+        "The mileage model is weaker still. Within the 0–100,000 km band the slope is "
+        "−0.00517 million VND per kilometre and the test \\(R^2\\) is 0.008; the "
+        "cross-validated \\(R^2\\) is 0.0074 with a standard deviation of 0.0035. "
+        "Removing the upper limit and keeping all 11,898 listings with a non-negative "
+        "odometer reading collapses the slope to −1.56 × 10⁻⁵ and the descriptive "
+        "\\(R^2\\) to 0.0003, which means that the apparent dependence on distance in the "
+        "restricted sample is driven by the most expensive vehicles being clustered at "
+        "low mileages rather than by a general market pattern."
     )
     report.table_caption(
         "Ordinary least squares models of listing price, evaluated on a grouped 20% "
@@ -1106,177 +921,118 @@ def build_report() -> Report:
         [28, 11, 19, 11, 11, 20],
     )
     report.body_p(
-        "The year model has a clearly positive slope: a listing is worth about 77.41 "
-        "million VND more for each additional year of production, which is "
-        "consistent with the direction a buyer would expect. The descriptive R² of "
-        "0.034 and the test R² of 0.047 are nevertheless very low, and the grouped "
-        "cross-validation on the training part gives 0.0349 with a standard "
-        "deviation of 0.0158 across the five folds. The mean-predictor baseline "
-        "achieves a test RMSE of 1,744.9 million VND, while the regression achieves "
-        "1,703.3 million VND, an improvement of 2.4% that is small compared with the "
-        "dispersion of prices in the corpus."
-    )
-    report.body_p(
-        "The mileage model is weaker still. Within the 0–100,000 km band the slope "
-        "is −0.00517 million VND per kilometre and the test R² is 0.008; the "
-        "cross-validated R² is 0.0074 with a standard deviation of 0.0035. Removing "
-        "the upper limit and keeping all 11,898 listings with a non-negative "
-        "odometer reading collapses the slope to −1.56 × 10⁻⁵ and the descriptive "
-        "R² to 0.0003, which means that the apparent dependence on distance in the "
-        "restricted sample is driven by the most expensive vehicles being clustered at "
-        "low mileages rather than by a general market pattern."
-    )
-    report.body_p(
         "These numbers answer RQ3, and the answer is a negative one with a clear "
-        "interpretation. Neither attribute explains more than five percent of the "
-        "price variance, so neither can support a valuation of an individual car. "
-        "The models retain value in a different role: they quantify the market's "
-        "price gradient, and they establish the scale of the noise against which any "
-        "future, richer model would have to demonstrate improvement. A multivariable "
-        "model that adds brand, body style, transmission and origin is the natural "
-        "next step, and the body-style comparison of Fig. 6 suggests that the "
-        "largest share of the missing explanatory power lies there."
+        "interpretation. Neither attribute explains more than five percent of the price "
+        "variance, so neither can support a valuation of an individual car. The models "
+        "retain value in a different role: they quantify the market’s price gradient, "
+        "and they establish the scale of the noise against which any future, richer "
+        "model would have to demonstrate improvement. A multivariable model that adds "
+        "brand, body style, transmission and origin is the natural next step, and the "
+        "body-style comparison suggests that the largest share of the missing "
+        "explanatory power lies there."
     )
 
     # ---------------------------------------------------------- 6 discussion
     report.heading1("Discussion")
-    report.heading2("What the Results Support")
     report.p1(
-        "The prototype demonstrates that the three capabilities can be combined "
-        "without interfering with one another, and that each of them is useful "
-        "within a well-defined range. Rule-based parsing isolates the attribute "
-        "constraints reliably and reduces the corpus to candidate sets of a few dozen "
-        "or a few thousand entries. The two retrieval representations are genuinely "
-        "complementary, as the trim query shows: the semantic score finds the "
-        "vehicle that fits the description, and the lexical score finds the vehicle "
-        "that carries the requested designation. The classifier is the strongest "
-        "component by a wide margin, and it stays balanced across the seven classes "
-        "despite a threefold imbalance in the training data."
+        "The prototype demonstrates that the three capabilities can be combined without "
+        "interfering with one another, and that each is useful within a well-defined "
+        "range. Rule-based parsing isolates the attribute constraints reliably and "
+        "reduces the corpus to candidate sets of a few dozen or a few thousand entries. "
+        "The two retrieval representations are genuinely complementary, as the trim "
+        "query shows: the semantic score finds the vehicle that fits the description, "
+        "and the lexical score finds the vehicle that carries the requested "
+        "designation. The classifier is the strongest component by a wide margin, and it "
+        "stays balanced across the seven classes despite a threefold imbalance in the "
+        "training data. Two engineering properties make the results reproducible rather "
+        "than merely plausible: the cache key is derived from the dataset fingerprint "
+        "and the model name, so a cached embedding can never be silently reused for a "
+        "different corpus or model; and the retrieval engine degrades rather than "
+        "fails, so the application remains usable offline."
     )
-    report.body_p(
-        "Two engineering properties are worth stating explicitly because they make "
-        "the results reproducible rather than merely plausible. The cache key is "
-        "derived from the dataset fingerprint and the model name, so a cached "
-        "embedding can never be silently reused for a different corpus or a "
-        "different model. And the retrieval engine degrades rather than fails: if "
-        "the embedding model cannot be reached, the interface continues to serve "
-        "lexical results and says so, which keeps the application usable in an "
-        "offline environment."
-    )
-    report.heading2("Limitations")
     report.p1(
-        "The limitations are of four different kinds, and it is worth separating "
-        "them, because they call for different remedies."
-    )
-    report.body_p(
-        "The first is a modelling limitation in the retrieval stage. Because the "
-        "query and the listing are encoded independently, the embedding space "
-        "compresses the distinction between adjacent trim codes, and the trim query "
-        "in Table 3 demonstrates the consequence. This is a limitation of the bi-"
-        "encoder design itself and cannot be repaired by tuning the fusion weight. "
-        "The remedies are either a cross-encoder reranking stage that scores the "
-        "query and each candidate jointly, or a rule that extracts the alphanumeric "
-        "trim token from the listing title and matches it exactly, which would "
-        "convert the trim into a hard filter on the same footing as the brand."
-    )
-    report.body_p(
-        "The second is a limitation of the data. The corpus contains 3,533 reposted "
-        "listings, and its attribute fields are missing at rates that range from "
-        "0.01% for the transmission to 22.95% for the distance travelled. Missing "
-        "values are treated as unknown rather than imputed, which is the honest "
-        "treatment but which discards a fifth of the corpus from the mileage "
-        "analysis. The price field also contains a long tail: the most expensive "
-        "listing is priced at 63,568 million VND, fifty times the median, and a "
-        "handful of such records dominate any sum of squared errors."
-    )
-    report.body_p(
-        "The third is a limitation of the evaluation. The retrieval experiment rests "
-        "on three benchmark queries, and while they were chosen to represent "
-        "distinct query types, three queries cannot support a statistical claim "
-        "about ranking quality. A proper evaluation would require a labelled set of "
-        "queries with relevance judgements, and this is the most expensive piece of "
-        "future work. The classification evaluation is on a published test split that "
-        "was never used for training, which makes it trustworthy, but the collection "
-        "covers seven categories that are all popular vehicles in India and none of "
-        "which is a common vehicle in Vietnam, so the reported accuracy should not be "
-        "read as an estimate of performance on Vietnamese traffic."
-    )
-    report.body_p(
-        "The fourth is a limitation of scope. The price models are descriptive "
-        "baselines rather than valuation models, and the system presents them as "
-        "such. Nothing in the interface uses a regression output to modify a "
-        "ranking score, which is a deliberate choice: the R² values reported in "
-        "Table 5 do not justify such an adjustment."
+        "The limitations are of four kinds, because they call for different remedies. "
+        "The first is a modelling limitation in the retrieval stage: because query and "
+        "listing are encoded independently, the embedding space compresses the "
+        "distinction between adjacent trim codes, and the trim query in Table 1 "
+        "demonstrates the consequence. This is a limitation of the bi-encoder design "
+        "itself and cannot be repaired by tuning the fusion weight; the remedies are "
+        "either a cross-encoder reranking stage that scores query and candidate "
+        "jointly, or a rule that extracts the alphanumeric trim token from the listing "
+        "title and matches it exactly. The second is a limitation of the data: the "
+        "corpus contains 3,533 reposted listings, its attribute fields are missing at "
+        "rates from 0.01% for the transmission to 22.95% for the distance travelled, and "
+        "the price field has a long tail in which the most expensive listing is priced "
+        "at 63,568 million VND, fifty times the median, so a handful of such records "
+        "dominate any sum of squared errors. The third is a limitation of the "
+        "evaluation: three benchmark queries cannot support a statistical claim about "
+        "ranking quality, and a proper evaluation would require a labelled set of "
+        "queries with relevance judgements. The classification evaluation is on a "
+        "published test split never used for training, which makes it trustworthy, but "
+        "the collection covers seven categories that are all popular vehicles in India "
+        "and none of which is common in Vietnam, so the reported accuracy should not be "
+        "read as an estimate of performance on Vietnamese traffic. The fourth is a "
+        "limitation of scope: the price models are descriptive baselines rather than "
+        "valuation models, and nothing in the interface uses a regression output to "
+        "modify a ranking score, because the \\(R^2\\) values in Table 3 do not justify "
+        "such an adjustment."
     )
 
     # ---------------------------------------------------------- 7 conclusion
     report.heading1("Conclusion")
     report.p1(
-        "This report has built and evaluated a prototype that supports car search, "
-        "car recognition and price orientation for the Vietnamese second-hand market. "
-        "The three pipelines are decoupled and share a single cleaned listing table "
-        "of 15,442 records."
-    )
-    report.body_p(
-        "On the retrieval side, the hybrid engine recovers the intended listing "
-        "exactly whenever the request is categorical, and the three benchmark "
-        "queries show that the semantic and lexical components fail in different "
-        "and complementary ways. The trim case documents the residual weakness of "
-        "an independently encoded query and identifies the concrete remedy."
-    )
-    report.body_p(
-        "On the recognition side, transfer learning proved to be the decisive "
-        "choice: a compact MobileNetV2 head on a frozen-then-fine-tuned ImageNet "
-        "backbone reaches 97.05% accuracy and 96.54% macro-F1 on 813 unseen "
-        "photographs, with a balanced accuracy within one percentage point of the "
-        "overall accuracy despite a threefold class imbalance."
-    )
-    report.body_p(
-        "On the price side, the negative result is equally informative. Single-"
-        "variable ordinary least squares explains 4.7% of the price variance in "
-        "production year and 0.8% in odometer reading, so a single attribute cannot "
-        "value a car. The practical implication for the prototype is that the price "
-        "track should be used as an orientation aid and a data-quality diagnostic "
-        "rather than as a scoring mechanism, which is how it is implemented."
-    )
-    report.body_p(
-        "Taken together, the results suggest that the value of such a system lies "
-        "less in the sophistication of any single model than in making several weak "
-        "signals legible to a user at once, together with the reasons why each "
-        "suggestion was made."
+        "This report has built and evaluated a prototype that supports car search, car "
+        "recognition and price orientation for the Vietnamese second-hand market. The "
+        "three pipelines are decoupled and share a single cleaned listing table of "
+        "15,442 records. On the retrieval side, the hybrid engine recovers the intended "
+        "listing exactly whenever the request is categorical, and the three benchmark "
+        "queries show that the semantic and lexical components fail in different and "
+        "complementary ways; the trim case documents the residual weakness of an "
+        "independently encoded query and identifies the concrete remedy. On the "
+        "recognition side, transfer learning proved to be the decisive choice: a "
+        "compact MobileNetV2 head on a frozen-then-fine-tuned ImageNet backbone reaches "
+        "97.05% accuracy and 96.54% macro-F1 on 813 unseen photographs, with a balanced "
+        "accuracy within one percentage point of the overall accuracy despite a "
+        "threefold class imbalance. On the price side, the negative result is equally "
+        "informative: single-variable ordinary least squares explains 4.7% of the price "
+        "variance in production year and 0.8% in odometer reading, so a single attribute "
+        "cannot value a car, and the price track should be used as an orientation aid "
+        "and a data-quality diagnostic rather than as a scoring mechanism. Taken "
+        "together, the results suggest that the value of such a system lies less in the "
+        "sophistication of any single model than in making several weak signals legible "
+        "to a user at once, together with the reasons why each suggestion was made."
     )
 
     # ------------------------------------------------- 8 reproducibility
     report.heading1("Reproducibility and Future Work")
     report.p1(
         "All three components are implemented in Python and run without a GPU. The "
-        "experiments in this report were run on a laptop with an Apple M5 processor "
-        "and 16 GB of memory, using Python 3.14.7, TensorFlow 2.22, scikit-learn "
-        "1.9.1, sentence-transformers 6.2.0, pandas 3.0.6, NumPy 2.5.3, Matplotlib "
-        "3.11.2 [6] and Streamlit 1.66.0 [15]. The listing data and the seven-class image "
-        "collection are public, and the trained classification model together with "
-        "its metrics is published under a pinned commit so that the reported "
-        "numbers can be reproduced exactly rather than re-trained approximately."
+        "experiments were run on a laptop with an Apple M5 processor and 16 GB of "
+        "memory, using Python 3.14.7, TensorFlow 2.22, scikit-learn 1.9.1, "
+        "sentence-transformers 6.2.0, pandas 3.0.6, NumPy 2.5.3, Matplotlib 3.11.2 [6] "
+        "and Streamlit 1.66.0 [15]. The listing data and the seven-class image "
+        "collection are public, and the trained classification model together with its "
+        "metrics is published under a pinned commit so that the reported numbers can be "
+        "reproduced exactly rather than re-trained approximately. Three directions for "
+        "future work follow from the analysis above."
     )
-    report.body_p("Three directions for future work follow from the analysis above.")
     report.bullet(
         "Replace the bi-encoder with a two-stage pipeline that adds a cross-encoder "
-        "reranking stage over the top candidates, or extract the alphanumeric trim "
-        "token from the listing title and promote it to a hard filter. Either "
-        "change addresses the trim confusion documented in Table 3 directly."
+        "reranking stage over the top candidates, or extract the alphanumeric trim token "
+        "from the listing title and promote it to a hard filter. Either change addresses "
+        "the trim confusion documented in Table 1 directly."
     )
     report.bullet(
-        "Extend the price analysis to a multivariable model that conditions on "
-        "brand, body style, transmission, fuel type and origin, using the grouped "
-        "split throughout and reporting the improvement over the single-variable "
-        "baselines of Table 5. The body-style comparison of Fig. 6 indicates where "
-        "the missing explanatory power is concentrated."
+        "Extend the price analysis to a multivariable model that conditions on brand, "
+        "body style, transmission, fuel type and origin, using the grouped split "
+        "throughout and reporting the improvement over the single-variable baselines of "
+        "Table 3."
     )
     report.bullet(
-        "Build a labelled query set with relevance judgements so that retrieval "
-        "quality can be measured rather than illustrated, and calibrate the "
-        "confidence threshold of 0.60 on a validation set drawn from Vietnamese "
-        "vehicles rather than from the Indian categories of the current collection."
+        "Build a labelled query set with relevance judgements so that retrieval quality "
+        "can be measured rather than illustrated, and calibrate the confidence threshold "
+        "of 0.60 on a validation set drawn from Vietnamese vehicles rather than from the "
+        "Indian categories of the current collection."
     )
 
     # ------------------------------------------------- acknowledgements
@@ -1289,10 +1045,9 @@ def build_report() -> Report:
     report.acknowledgement(
         "Data availability.",
         "The listing data and the vehicle image collection used in this study are "
-        "publicly available on Kaggle. The trained MobileNetV2 model and its "
-        "evaluation metrics are published with the project repository under a pinned "
-        "commit, so that the numbers reported here can be verified without "
-        "retraining.",
+        "publicly available on Kaggle. The trained MobileNetV2 model and its evaluation "
+        "metrics are published with the project repository under a pinned commit, so "
+        "that the numbers reported here can be verified without retraining.",
     )
     report.acknowledgement(
         "Competing interests.",
@@ -1367,7 +1122,7 @@ def build_report() -> Report:
             "06/11/2026",
             "Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, "
             "A.N., Kaiser, Ł., Polosukhin, I.: Attention is all you need. In: Advances "
-            "in Neural Information Processing Systems 30, pp. 5998–6008 (2017)"
+            "in Neural Information Processing Systems 30, pp. 5998–6008 (2017)",
         ]
     )
     return report

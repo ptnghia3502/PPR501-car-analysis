@@ -685,18 +685,181 @@ def figure_per_class_scores(per_class: pd.DataFrame) -> Path:
     return path
 
 
+def figure_price_panels(frame: pd.DataFrame) -> Path:
+    """Fig. 4 - the two regressions side by side in a single figure."""
+    valid = frame.dropna(subset=["Year", "Price_Million"])
+    valid = valid[valid["Year"].between(1900, 2035)]
+    year_x = valid["Year"].to_numpy(dtype=float)
+    year_y = valid["Price_Million"].to_numpy(dtype=float)
+    year_model = LinearRegression().fit(year_x.reshape(-1, 1), year_y)
+    year_r2 = year_model.score(year_x.reshape(-1, 1), year_y)
+
+    known = frame.dropna(subset=["Km", "Price_Million"])
+    known = known[known["Km"].ge(0)]
+    capped = known[known["Km"].between(0, 100_000)]
+    km_x = capped["Km"].to_numpy(dtype=float)
+    km_y = capped["Price_Million"].to_numpy(dtype=float)
+    km_model = LinearRegression().fit(km_x.reshape(-1, 1), km_y)
+    km_r2 = km_model.score(km_x.reshape(-1, 1), km_y)
+
+    figure, axes = plt.subplots(1, 2, figsize=(7.6, 3.0))
+    _regression_panel(
+        axes[0],
+        year_x,
+        year_y,
+        "Production year",
+        "Price against production year",
+        None,
+        year_r2,
+        len(valid),
+    )
+    _regression_panel(
+        axes[1],
+        km_x,
+        km_y,
+        "Odometer reading (km)",
+        "Price against odometer reading",
+        (0, 100_000),
+        km_r2,
+        len(capped),
+    )
+    axes[1].xaxis.set_major_formatter(
+        matplotlib.ticker.FuncFormatter(lambda value, _pos: f"{value / 1000:.0f}k")
+    )
+    figure.tight_layout()
+    path = FIG_DIR / "fig4_price_panels.png"
+    figure.savefig(path)
+    plt.close(figure)
+    return path
+
+
+def figure_confusion_and_scores(
+    matrix: np.ndarray, per_class: pd.DataFrame, accuracy: float
+) -> Path:
+    """Fig. 5 - confusion matrix and per-class scores in a single figure."""
+    support = matrix.sum(axis=1)
+    balanced = float(per_class["Recall"].mean())
+
+    figure, axes = plt.subplots(1, 2, figsize=(7.8, 3.2), width_ratios=[1.0, 1.25])
+
+    image = axes[0].imshow(
+        _safe_divide(matrix, support[:, None]),
+        cmap="Blues",
+        vmin=0,
+        vmax=1,
+        aspect="auto",
+    )
+    for row in range(matrix.shape[0]):
+        for column in range(matrix.shape[1]):
+            value = matrix[row, column] / support[row]
+            axes[0].text(
+                column,
+                row,
+                f"{value:.0%}",
+                ha="center",
+                va="center",
+                fontsize=6.6,
+                color="white" if value > 0.5 else "#1F2937",
+            )
+    axes[0].set_xticks(range(len(CLASS_ORDER)))
+    axes[0].set_xticklabels(CLASS_ORDER, rotation=40, ha="right", fontsize=7)
+    axes[0].set_yticks(range(len(CLASS_ORDER)))
+    axes[0].set_yticklabels(CLASS_ORDER, fontsize=7)
+    axes[0].set_xlabel("Predicted class", fontsize=8)
+    axes[0].set_ylabel("True class", fontsize=8)
+    axes[0].set_title(
+        f"Confusion matrix (n = {int(support.sum())} test images)", pad=6, fontsize=9
+    )
+    axes[0].grid(False)
+    bar = figure.colorbar(image, ax=axes[0], fraction=0.04, pad=0.02)
+    bar.set_label("Recall per row", fontsize=7)
+    bar.ax.tick_params(labelsize=6)
+
+    positions = np.arange(len(per_class))
+    width = 0.26
+    axes[1].bar(
+        positions - width,
+        per_class["Precision"],
+        width=width,
+        color=NAVY,
+        label="Precision",
+        linewidth=0,
+    )
+    axes[1].bar(
+        positions,
+        per_class["Recall"],
+        width=width,
+        color=ORANGE,
+        label="Recall",
+        linewidth=0,
+    )
+    axes[1].bar(
+        positions + width,
+        per_class["F1"],
+        width=width,
+        color="#8FB6E3",
+        label="F1",
+        linewidth=0,
+    )
+    axes[1].axhline(
+        accuracy, color=RED, linewidth=1.1, linestyle="--", label=f"Accuracy {accuracy:.2%}"
+    )
+    axes[1].axhline(
+        balanced,
+        color="#3E9B90",
+        linewidth=1.1,
+        linestyle=":",
+        label=f"Balanced accuracy {balanced:.2%}",
+    )
+    axes[1].set_xticks(positions)
+    axes[1].set_xticklabels(per_class["Class"], rotation=40, ha="right", fontsize=7)
+    axes[1].set_ylim(0.78, 1.03)
+    axes[1].set_ylabel("Score", fontsize=8)
+    axes[1].set_title("Per-class scores on the test split", pad=6, fontsize=9)
+    axes[1].set_axisbelow(True)
+    axes[1].legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, -0.26),
+        ncols=3,
+        columnspacing=1.0,
+        handlelength=1.4,
+        fontsize=7,
+        borderaxespad=0.0,
+    )
+    figure.tight_layout()
+    path = FIG_DIR / "fig5_cnn_evaluation.png"
+    figure.savefig(path)
+    plt.close(figure)
+    return path
+
+
 def main() -> None:
     apply_style()
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     frame = load_listings()
     figure_year_distribution(frame)
-    figure_image_counts()
     figure_architecture()
-    figure_year_regression(frame)
-    figure_mileage_regression(frame)
+    figure_price_panels(frame)
     figure_body_style(frame)
-    _, per_class = figure_confusion_matrix()
-    figure_per_class_scores(per_class)
+    metrics = json.loads((CNN_DIR / "metrics.json").read_text(encoding="utf-8"))
+    matrix = np.asarray(metrics["confusion_matrix"], dtype=float)
+    support = matrix.sum(axis=1)
+    predicted = matrix.sum(axis=0)
+    precision = _safe_divide(np.diag(matrix), predicted)
+    recall = _safe_divide(np.diag(matrix), support)
+    f1 = _safe_divide(2 * precision * recall, precision + recall)
+    per_class = pd.DataFrame(
+        {
+            "Class": CLASS_ORDER,
+            "Support": support.astype(int),
+            "Precision": precision,
+            "Recall": recall,
+            "F1": f1,
+        }
+    )
+    figure_confusion_and_scores(
+        matrix, per_class, float(metrics["test_accuracy"])
+    )
     print("figures written to", FIG_DIR)
 
 

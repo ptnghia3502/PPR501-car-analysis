@@ -52,6 +52,16 @@ CLASS_ORDER = [
     "Tata Safari",
     "Toyota Innova",
 ]
+# Two-line short forms for the rotated axis labels of the evaluation figure.
+CLASS_LABELS_WRAPPED = [
+    "Audi",
+    "Hyundai\nCreta",
+    "Mahindra\nScorpio",
+    "Rolls\nRoyce",
+    "Maruti\nSuzuki\nSwift",
+    "Tata\nSafari",
+    "Toyota\nInnova",
+]
 FOLDER_ORDER = [
     "Audi",
     "Hyundai Creta",
@@ -374,7 +384,12 @@ def _regression_panel(
     n: int,
     y_cap: float = 5000.0,
 ) -> None:
-    """Scatter + OLS line + binned means with an inter-quartile band."""
+    """Scatter + OLS line + binned means with an inter-quartile band.
+
+    The panel title is kept short so that it cannot run into the title of the
+    neighbouring panel; the sample size and the goodness of fit are printed
+    inside the axes instead.
+    """
     model = LinearRegression().fit(x.reshape(-1, 1), y)
     grid = np.linspace(x.min(), x.max(), 200)
     axis.scatter(
@@ -433,13 +448,19 @@ def _regression_panel(
     axis.set_xlabel(x_label)
     axis.set_ylabel("Listing price (million VND)")
     axis.set_ylim(0, y_cap)
-    axis.set_title(f"{title} (n = {n:,}; R² = {r2:.3f})", pad=7)
+    axis.set_title(f"{title}\nn = {n:,};  R² = {r2:.3f}", pad=6, fontsize=9.5, linespacing=1.4)
     if xlim is not None:
         axis.set_xlim(*xlim)
     else:
         axis.set_xlim(x.min() - 1.0, x.max() + 1.0)
     axis.set_axisbelow(True)
-    axis.legend(loc="upper right", ncols=2, columnspacing=1.0, handlelength=1.6)
+    axis.legend(
+        loc="upper right",
+        ncols=2,
+        columnspacing=1.0,
+        handlelength=1.6,
+        fontsize=7.5,
+    )
 
 
 def figure_year_regression(frame: pd.DataFrame) -> Path:
@@ -597,9 +618,9 @@ def figure_confusion_matrix() -> tuple[Path, pd.DataFrame]:
                 color="white" if value > 0.5 else "#1F2937",
             )
     axis.set_xticks(range(len(CLASS_ORDER)))
-    axis.set_xticklabels(CLASS_ORDER, rotation=32, ha="right")
+    axis.set_xticklabels(CLASS_LABELS_WRAPPED, rotation=40, ha="right")
     axis.set_yticks(range(len(CLASS_ORDER)))
-    axis.set_yticklabels(CLASS_ORDER)
+    axis.set_yticklabels(CLASS_LABELS_WRAPPED)
     axis.set_xlabel("Predicted class")
     axis.set_ylabel("True class")
     axis.set_title(
@@ -665,7 +686,7 @@ def figure_per_class_scores(per_class: pd.DataFrame) -> Path:
         label=f"Balanced accuracy {balanced:.2%}",
     )
     axis.set_xticks(positions)
-    axis.set_xticklabels(per_class["Class"], rotation=18, ha="right")
+    axis.set_xticklabels(CLASS_LABELS_WRAPPED, rotation=18, ha="right")
     axis.set_ylim(0.78, 1.03)
     axis.set_ylabel("Score")
     axis.set_title("Per-class classification scores on the test split", pad=6)
@@ -685,8 +706,8 @@ def figure_per_class_scores(per_class: pd.DataFrame) -> Path:
     return path
 
 
-def figure_price_panels(frame: pd.DataFrame) -> Path:
-    """Fig. 4 - the two regressions side by side in a single figure."""
+def build_price_panels_figure(frame: pd.DataFrame):
+    """Build the two-panel price figure and return ``(figure, axes)``."""
     valid = frame.dropna(subset=["Year", "Price_Million"])
     valid = valid[valid["Year"].between(1900, 2035)]
     year_x = valid["Year"].to_numpy(dtype=float)
@@ -727,20 +748,24 @@ def figure_price_panels(frame: pd.DataFrame) -> Path:
         matplotlib.ticker.FuncFormatter(lambda value, _pos: f"{value / 1000:.0f}k")
     )
     figure.tight_layout()
+    return figure, axes
+
+
+def figure_price_panels(frame: pd.DataFrame) -> Path:
+    """Fig. 4 - the two regressions side by side in a single figure."""
+    figure, _axes = build_price_panels_figure(frame)
     path = FIG_DIR / "fig4_price_panels.png"
     figure.savefig(path)
     plt.close(figure)
     return path
 
 
-def figure_confusion_and_scores(
-    matrix: np.ndarray, per_class: pd.DataFrame, accuracy: float
-) -> Path:
-    """Fig. 5 - confusion matrix and per-class scores in a single figure."""
+def build_cnn_evaluation_figure(matrix: np.ndarray, per_class: pd.DataFrame, accuracy: float):
+    """Build the two-panel CNN evaluation figure and return ``(figure, axes)``."""
     support = matrix.sum(axis=1)
     balanced = float(per_class["Recall"].mean())
 
-    figure, axes = plt.subplots(1, 2, figsize=(7.8, 3.2), width_ratios=[1.0, 1.25])
+    figure, axes = plt.subplots(1, 2, figsize=(9.6, 3.5), width_ratios=[1.15, 1.15])
 
     image = axes[0].imshow(
         _safe_divide(matrix, support[:, None]),
@@ -762,9 +787,9 @@ def figure_confusion_and_scores(
                 color="white" if value > 0.5 else "#1F2937",
             )
     axes[0].set_xticks(range(len(CLASS_ORDER)))
-    axes[0].set_xticklabels(CLASS_ORDER, rotation=40, ha="right", fontsize=7)
+    axes[0].set_xticklabels(CLASS_LABELS_WRAPPED, rotation=0, ha="center", fontsize=7)
     axes[0].set_yticks(range(len(CLASS_ORDER)))
-    axes[0].set_yticklabels(CLASS_ORDER, fontsize=7)
+    axes[0].set_yticklabels(CLASS_ORDER, fontsize=6.4)
     axes[0].set_xlabel("Predicted class", fontsize=8)
     axes[0].set_ylabel("True class", fontsize=8)
     axes[0].set_title(
@@ -812,14 +837,14 @@ def figure_confusion_and_scores(
         label=f"Balanced accuracy {balanced:.2%}",
     )
     axes[1].set_xticks(positions)
-    axes[1].set_xticklabels(per_class["Class"], rotation=40, ha="right", fontsize=7)
+    axes[1].set_xticklabels(CLASS_LABELS_WRAPPED, rotation=0, ha="center", fontsize=7)
     axes[1].set_ylim(0.78, 1.03)
     axes[1].set_ylabel("Score", fontsize=8)
     axes[1].set_title("Per-class scores on the test split", pad=6, fontsize=9)
     axes[1].set_axisbelow(True)
     axes[1].legend(
         loc="upper center",
-        bbox_to_anchor=(0.5, -0.26),
+        bbox_to_anchor=(0.5, -0.40),
         ncols=3,
         columnspacing=1.0,
         handlelength=1.4,
@@ -827,6 +852,14 @@ def figure_confusion_and_scores(
         borderaxespad=0.0,
     )
     figure.tight_layout()
+    return figure, axes
+
+
+def figure_confusion_and_scores(
+    matrix: np.ndarray, per_class: pd.DataFrame, accuracy: float
+) -> Path:
+    """Fig. 5 - confusion matrix and per-class scores in a single figure."""
+    figure, _axes = build_cnn_evaluation_figure(matrix, per_class, accuracy)
     path = FIG_DIR / "fig5_cnn_evaluation.png"
     figure.savefig(path)
     plt.close(figure)

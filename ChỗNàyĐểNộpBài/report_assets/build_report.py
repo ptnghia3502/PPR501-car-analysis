@@ -450,7 +450,7 @@ def build_report() -> Report:
     report.heading2("Semantic Retrieval with Sentence Embeddings")
     report.p1(
         "Text retrieval on short, heterogeneous documents is classically addressed with "
-        "sparse lexical models. In the tf-idf weighting of Salton and Buckley [10], the "
+        "sparse lexical models. In the tf-idf weighting of Salton and Buckley [1], the "
         "weight of a term combines how often it occurs in a document with how widely it "
         "is distributed across the collection. The approach remains attractive because "
         "it is transparent, cheap, and matches the alphanumeric vocabulary of car trims "
@@ -465,11 +465,11 @@ def build_report() -> Report:
         "sentence into a fixed-dimensional vector, positioning semantically similar "
         "sentences close to one another in vector space; for unit-normalised vectors the "
         "similarity between a query and a document is their dot product. This approach "
-        "rests on the Transformer architecture [13] and has been popularised by "
-        "bi-encoder models such as Sentence-BERT [9], which turns the pre-trained "
-        "bidirectional encoder of Devlin et al. [3] into a bi-encoder in which query and "
+        "rests on the Transformer architecture [2] and has been popularised by "
+        "bi-encoder models such as Sentence-BERT [3], which turns the pre-trained "
+        "bidirectional encoder of Devlin et al. [4] into a bi-encoder in which query and "
         "document are embedded independently and compared by cosine similarity, and by "
-        "the multilingual distillation of Reimers and Gurevych [8], which is what makes "
+        "the multilingual distillation of Reimers and Gurevych [5], which is what makes "
         "Vietnamese queries tractable. The two families are complementary: the "
         "embedding captures paraphrase and intent, while the sparse vector captures the "
         "exact codes that distinguish one trim from another."
@@ -478,14 +478,14 @@ def build_report() -> Report:
     report.p1(
         "Convolutional neural networks learn hierarchical features directly from "
         "pixels, through stacked convolutions, pooling and fully connected layers, and "
-        "MobileNetV2 [11] is the instance used in this work: its inverted residual "
+        "MobileNetV2 [6] is the instance used in this work: its inverted residual "
         "blocks keep the representation expressive at low cost, which makes it a good "
         "candidate for CPU-only inference. Training from scratch would require far more "
         "data than the present task provides, so transfer learning is the practical "
-        "choice: a backbone pre-trained on ImageNet [2] is reused and only a small "
+        "choice: a backbone pre-trained on ImageNet [7] is reused and only a small "
         "classification head is trained on the target domain. Two training details "
         "matter later. The first is class re-weighting, since the collection is "
-        "imbalanced and the effective-number weighting of Cui et al. [1] gives each "
+        "imbalanced and the effective-number weighting of Cui et al. [8] gives each "
         "class a weight proportional to the inverse of the expected overlap between its "
         "samples. The second is mild augmentation only, because aggressive rotation or "
         "cropping removes exactly the grille, badge and headlamp shapes that "
@@ -500,7 +500,7 @@ def build_report() -> Report:
         "value here is not prediction accuracy but orientation: it quantifies how much "
         "of the observed price variation is associated with each attribute, and so "
         "establishes the limit of what one attribute can tell a buyer about a price. "
-        "The estimates are obtained through the estimator interface of scikit-learn [7] "
+        "The estimates are obtained through the estimator interface of scikit-learn [9] "
         "and every metric is computed on data withheld from the fit, using a grouped "
         "split because listings that share a name and a price are the same car reposted "
         "on several platforms."
@@ -510,7 +510,7 @@ def build_report() -> Report:
     report.heading1("Dataset and Preprocessing")
     report.p1(
         "The primary corpus is a public collection of used-car listings scraped from "
-        "Vietnamese marketplaces [6]: 15,442 records described by 17 columns, among "
+        "Vietnamese marketplaces [10]: 15,442 records described by 17 columns, among "
         "them the model name, the asking price as free text, the production year, the "
         "distance travelled, the body style, the fuel type, the transmission, the number "
         "of seats and doors, the colours, the origin, the condition and the location. "
@@ -546,7 +546,7 @@ def build_report() -> Report:
     )
     report.p1(
         "The visual component uses a separate public collection of vehicle photographs "
-        "[5] organised into seven category folders: Audi, Hyundai Creta, Mahindra "
+        "[11] organised into seven category folders: Audi, Hyundai Creta, Mahindra "
         "Scorpio, Rolls Royce, Maruti Suzuki Swift, Tata Safari and Toyota Innova, split "
         "by the publisher into 3,352 training and 813 test photographs so that the test "
         "split can be used exactly as published. The class distribution is markedly "
@@ -571,10 +571,11 @@ def build_report() -> Report:
         "responsive on commodity hardware. First, the sentence embeddings of all "
         "15,442 listings and the TF-IDF matrix are computed once and cached on disk "
         "under a key derived from the model name and the dataset file, so that a change "
-        "to either invalidates the cache automatically. Second, the embedding model is "
-        "loaded lazily, only when a query needs semantic scoring. The model itself is "
-        "the twelve-layer multilingual MiniLM bi-encoder released on the Hugging Face "
-        "Hub [4], and everything runs on a multi-core CPU."
+        "to either invalidates the cache automatically; the process-level cache is "
+        "declared with the caching primitives of Streamlit [13]. Second, the embedding "
+        "model is loaded lazily, only when a query needs semantic scoring. The model "
+        "itself is the twelve-layer multilingual MiniLM bi-encoder released on the "
+        "Hugging Face Hub [14], and everything runs on a multi-core CPU."
     )
     report.figure(
         "fig3_architecture.png",
@@ -926,10 +927,11 @@ def build_report() -> Report:
         "All three components are implemented in Python and run without a GPU. The "
         "experiments were run on a laptop with an Apple M5 processor and 16 GB of "
         "memory, using Python 3.14.7, TensorFlow 2.22, scikit-learn 1.9.1, "
-        "sentence-transformers 6.2.0 and Streamlit 1.66.0 [12]. The listing data and "
-        "the seven-class image collection are public, and the trained model together "
-        "with its metrics is published under a pinned commit so that the reported "
-        "numbers can be reproduced exactly. Three directions for future work follow."
+        "sentence-transformers 6.2.0 and Streamlit 1.66.0 [12]. The listing data [10] "
+        "and the seven-class image collection [11] are public and were used at the "
+        "dataset versions recorded in the reference list, and the embedding model [14] "
+        "is pinned to an immutable revision, so the reported numbers can be reproduced "
+        "exactly. Three directions for future work follow."
     )
     report.bullet(
         "Replace the bi-encoder with a two-stage pipeline that adds a cross-encoder "
@@ -966,53 +968,59 @@ def build_report() -> Report:
     )
     report.references(
         [
-            "Cui, Y., Jia, M., Lin, T.-Y., Song, Y., Belongie, S.: Class-balanced loss "
-            "based on effective number of samples. In: Proceedings of the IEEE/CVF "
-            "Conference on Computer Vision and Pattern Recognition, pp. 9268–9277. "
-            "IEEE (2019)",
-            "Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., Fei-Fei, L.: ImageNet: "
-            "a large-scale hierarchical image database. In: Proceedings of the IEEE "
-            "Conference on Computer Vision and Pattern Recognition, pp. 248–255. IEEE "
-            "(2009)",
-            "Devlin, J., Chang, M.-W., Lee, K., Toutanova, K.: BERT: pre-training of "
-            "deep bidirectional transformers for language understanding. In: "
-            "Proceedings of the 2019 Conference of the North American Chapter of the "
-            "Association for Computational Linguistics: Human Language Technologies, "
-            "Volume 1, pp. 4171–4186. Association for Computational Linguistics (2019)",
-            "Hugging Face: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2. "
-            "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2, "
-            "last accessed 06/11/2026",
-            "Kaggle: Car Images Dataset (kshitij192/cars-image-dataset). "
-            "https://www.kaggle.com/datasets/kshitij192/cars-image-dataset, last "
-            "accessed 06/11/2026",
-            "Kaggle: Vietnam Automobile Dataset (qucvinhdng/automobile-dataset). "
-            "https://www.kaggle.com/datasets/qucvinhdng/automobile-dataset, last "
-            "accessed 06/11/2026",
-            "Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., "
-            "Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., "
-            "Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., "
-            "Duchesnay, E.: Scikit-learn: machine learning in Python. JMLR 12, "
-            "2825–2830 (2011)",
-            "Reimers, N., Gurevych, I.: Making monolingual sentence embeddings "
-            "multilingual using knowledge distillation. In: Proceedings of the 2020 "
-            "Conference on Empirical Methods in Natural Language Processing, "
-            "pp. 4512–4525. Association for Computational Linguistics (2020)",
+            "Salton, G., Buckley, C.: Term-weighting approaches in automatic text "
+            "retrieval. Inf. Process. Manage. 24(5), 513–523 (1988)",
+            "Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, "
+            "A.N., Kaiser, Ł., Polosukhin, I.: Attention is all you need. In: Advances "
+            "in Neural Information Processing Systems 30, pp. 5998–6008. Curran "
+            "Associates, Inc. (2017)",
             "Reimers, N., Gurevych, I.: Sentence-BERT: sentence embeddings using "
             "Siamese BERT-networks. In: Proceedings of the 2019 Conference on "
             "Empirical Methods in Natural Language Processing and the 9th International "
             "Joint Conference on Natural Language Processing, pp. 3982–3992. "
             "Association for Computational Linguistics (2019)",
-            "Salton, G., Buckley, C.: Term-weighting approaches in automatic text "
-            "retrieval. Inf. Process. Manage. 24(5), 513–523 (1988)",
+            "Devlin, J., Chang, M.-W., Lee, K., Toutanova, K.: BERT: pre-training of "
+            "deep bidirectional transformers for language understanding. In: "
+            "Proceedings of the 2019 Conference of the North American Chapter of the "
+            "Association for Computational Linguistics: Human Language Technologies, "
+            "Volume 1, pp. 4171–4186. Association for Computational Linguistics (2019)",
+            "Reimers, N., Gurevych, I.: Making monolingual sentence embeddings "
+            "multilingual using knowledge distillation. In: Proceedings of the 2020 "
+            "Conference on Empirical Methods in Natural Language Processing, "
+            "pp. 4512–4525. Association for Computational Linguistics (2020)",
             "Sandler, M., Howard, A., Zhu, M., Zhmoginov, A., Chen, L.-C.: MobileNetV2: "
             "inverted residuals and linear bottlenecks. In: Proceedings of the IEEE "
             "Conference on Computer Vision and Pattern Recognition, pp. 4510–4520. IEEE "
             "(2018)",
-            "Streamlit documentation. https://docs.streamlit.io/, last accessed "
-            "06/11/2026",
-            "Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, "
-            "A.N., Kaiser, Ł., Polosukhin, I.: Attention is all you need. In: Advances "
-            "in Neural Information Processing Systems 30, pp. 5998–6008 (2017)",
+            "Deng, J., Dong, W., Socher, R., Li, L.-J., Li, K., Fei-Fei, L.: ImageNet: "
+            "a large-scale hierarchical image database. In: Proceedings of the IEEE "
+            "Conference on Computer Vision and Pattern Recognition, pp. 248–255. IEEE "
+            "(2009)",
+            "Cui, Y., Jia, M., Lin, T.-Y., Song, Y., Belongie, S.: Class-balanced loss "
+            "based on effective number of samples. In: Proceedings of the IEEE/CVF "
+            "Conference on Computer Vision and Pattern Recognition, pp. 9268–9277. "
+            "IEEE (2019)",
+            "Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., "
+            "Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., "
+            "Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., "
+            "Duchesnay, E.: Scikit-learn: machine learning in Python. J. Mach. Learn. "
+            "Res. 12, 2825–2830 (2011)",
+            "Dương, Q.V. (Kaggle user qucvinhdng): Vietnam Automobile Dataset. "
+            "Dataset version 25. https://www.kaggle.com/datasets/qucvinhdng/automobile-dataset, "
+            "last updated 16/09/2024, last accessed 06/11/2026",
+            "Kumar, K. (Kaggle user kshitij192): Car Images Dataset. Dataset version 3. "
+            "https://www.kaggle.com/datasets/kshitij192/cars-image-dataset, last updated "
+            "05/04/2022, last accessed 06/11/2026",
+            "Streamlit: Streamlit documentation. Version 1.66.0. "
+            "https://docs.streamlit.io/, last accessed 06/11/2026",
+            "Streamlit: Caching — st.cache_data and st.cache_resource. Version 1.66.0. "
+            "https://docs.streamlit.io/develop/concepts/architecture/caching, last "
+            "accessed 06/11/2026",
+            "Reimers, N., Gurevych, I., Thakur, N., et al.: "
+            "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2. Hugging Face "
+            "Hub, revision e8f8c211226b894fcb81acc59f3b34ba3efd5f42. "
+            "https://huggingface.co/sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2, "
+            "last accessed 06/11/2026",
         ]
     )
     return report
